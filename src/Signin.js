@@ -11,7 +11,7 @@ class Signin extends React.Component {
             .then((data) => {
                 message.success('Login success');
                 console.log('Successfully Logged In: ', data.user.uid);
-                
+                //Go to next Page
             })
             .catch((err) => {
                 message.error('Login Failed');
