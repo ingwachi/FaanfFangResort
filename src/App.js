@@ -7,7 +7,6 @@ import ImageUpload from './Booking/ImageUpload';
 import Signin from './Admin/Signin';
 import BookingPage from './Booking/BookingPage';
 
-
 class App extends React.Component {
   render() {
   return (

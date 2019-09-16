@@ -142,111 +142,111 @@ class Booking extends React.Component{
           const rangeConfig = {
             rules: [{ type: 'array', required: true, message: 'Please select time!' }],
           };
-        return (
-           <div class = 'body'>
-               <div style={{ background: 'coral'}}>
-               <h1 style={{marginTop: '%5'}}>จองห้องพัก</h1>
-               
-               <Form {...formItemLayout} onSubmit={this.handleSubmit} >
-                    <div style={{ marginLeft: '30%', marginRight: "20%" }}>
-                        <Form.Item label="ชื่อผู้จอง :" hasFeedback>
-                            {getFieldDecorator('name', {
-                                rules: [{ required: true, message: 'Please input your name!' }],
-                            })(<Input />)}
-                        </Form.Item>
-                        <Form.Item label="เบอร์ติดต่อ :" hasFeedback>
-                            {getFieldDecorator('phone', {
-                                rules: [{ required: true, message: 'Please input your phone number!' }],
-                            })(<Input addonBefore={prefixSelector}/>)}
-                        </Form.Item>
-                        <Form.Item label="E-mail" hasFeedback >
-                            {getFieldDecorator('email', {
-                                rules: [
-                                {
-                                    type: 'email',
-                                    message: 'The input is not valid E-mail!',
-                                },
-                                {
-                                    required: true,
-                                    message: 'Please input your E-mail!',
-                                },
-                                ],
-                            })(<Input />)}
-                        </Form.Item>
-                        <Form.Item label="เวลาที่ต้องการ check-in & check-out" hasFeedback>
-                            {getFieldDecorator('checkinout', rangeConfig)(<RangePicker 
-                            onChange={this.onChangeDate} format={dateFormat}/>)}
-                        </Form.Item>
-                    </div>
-                    <div class = 'picblock' >
-                            <Row gutter={16}>
-                            <Col span={8}>
-                                <Card  title="Card title"  bordered={false}>
-                                <img src = {room1} id ="headbookct" class = "editpic"/>
-                                    <InputNumber min={0} max={10} defaultValue={0}  onChange={this.onChangeNumberA}/>
-                            </Card>
-                            </Col>
-                            <Col span={8}>
-                                <Card title="Card title" bordered={false}>
-                                <img src = {room2} id ="headbookct" class = "picture"/>
-                                <InputNumber min={0} max={10} defaultValue={0}  onChange={this.onChangeNumberC} />
-                                </Card>
-                            </Col>
-                            <Col span={8}>
-                                <Card title="Card title" bordered={false}>
-                                <img src = {room3} id ="headbookct" class = "picture"/>
-                                <InputNumber min={0} max={10} defaultValue={0}  onChange={this.onChangeNumberB} />
-                                </Card>
-                            </Col>
-                            
-                            </Row>
-
-                        <div style={{ background: '#DCDCDC', marginTop: '5%'}}></div>
-                            <Row gutter={16}>
-                            <Col span={8}>
-                                <Card title="Card title" bordered={false}>
-                                <img src = {room4} id ="headbookct" class = "picture"/>
-                                <InputNumber min={0} max={10} defaultValue={0}  onChange={this.onChangeNumber5d} />
-                                </Card>
-                            </Col>
-                            
-                            <Col span={8}>
-                                <Card title="Card title" bordered={false}>
-                                <img src = {room5} id ="headbookct" class = "picture"/>
-                                <InputNumber min={0} max={10} defaultValue={0}  onChange={this.onChangeNumberD} />
-                                </Card>
-                            </Col>
-                            <Col span={8}>
-                                <Card title="Card title" bordered={false}>
-                                <img src = {room6} id ="headbookctt" class = "picture"/>
-                                <InputNumber min={0} max={10} defaultValue={0}  onChange={this.onChangeNumber8d} />
-                                </Card>
-                            </Col>
-
-                            </Row>
-                        </div>
-                        
-                    <TextArea name="Details" onChange={this.onchangeTextInput} id = "detailsBox"
-                        placeholder="รายละเอียดเพิ่มเติมเช่น ต้องการเตียงเสริม (คิดเพิ่มชุดละ 100 บาท)"
-                    />
-
-                    <Form.Item name="price"> 
-                       {this.Price}
-                    </Form.Item>
-                    <Form.Item label="เงินมัดจำที่ต้องจ่าย : " name="earnest">
-                        <span className="ant-form-text">{this.Earnest}</span>
-                    </Form.Item>
-                    <Form.Item wrapperCol={{ span: 12, offset: 6 }}>
-                        <Button type="primary" htmlType="submit">
-                            Submit
-                        </Button>
-                    </Form.Item>
-               </Form></div>
-           </div>
-        )
-    }
-
-}
-
-
-export default Form.create()(Booking);
+          return (
+            <div class = 'body'>
+                <div style={{ background: 'coral'}}>
+                <h1 style={{marginTop: '%5'}}>จองห้องพัก</h1>
+                
+                <Form {...formItemLayout} onSubmit={this.handleSubmit} >
+                     <div style={{ marginLeft: '30%', marginRight: "20%" }}>
+                         <Form.Item label="ชื่อผู้จอง :" hasFeedback>
+                             {getFieldDecorator('name', {
+                                 rules: [{ required: true, message: 'Please input your name!' }],
+                             })(<Input />)}
+                         </Form.Item>
+                         <Form.Item label="เบอร์ติดต่อ :" hasFeedback>
+                             {getFieldDecorator('phone', {
+                                 rules: [{ required: true, message: 'Please input your phone number!' }],
+                             })(<Input addonBefore={prefixSelector}/>)}
+                         </Form.Item>
+                         <Form.Item label="E-mail" hasFeedback >
+                             {getFieldDecorator('email', {
+                                 rules: [
+                                 {
+                                     type: 'email',
+                                     message: 'The input is not valid E-mail!',
+                                 },
+                                 {
+                                     required: true,
+                                     message: 'Please input your E-mail!',
+                                 },
+                                 ],
+                             })(<Input />)}
+                         </Form.Item>
+                         <Form.Item label="เวลาที่ต้องการ check-in & check-out" hasFeedback>
+                             {getFieldDecorator('checkinout', rangeConfig)(<RangePicker 
+                             onChange={this.onChangeDate} format={dateFormat}/>)}
+                         </Form.Item>
+                     </div>
+                     <div class = 'picblock' >
+                             <Row gutter={16}>
+                             <Col span={8}>
+                                 <Card  title="Card title"  bordered={false}>
+                                 <img src = {room1} id ="headbookct" class = "editpic"/>
+                                     <InputNumber min={0} max={10} defaultValue={0}  onChange={this.onChangeNumberA}/>
+                             </Card>
+                             </Col>
+                             <Col span={8}>
+                                 <Card title="Card title" bordered={false}>
+                                 <img src = {room2} id ="headbookct" class = "picture"/>
+                                 <InputNumber min={0} max={10} defaultValue={0}  onChange={this.onChangeNumberC} />
+                                 </Card>
+                             </Col>
+                             <Col span={8}>
+                                 <Card title="Card title" bordered={false}>
+                                 <img src = {room3} id ="headbookct" class = "picture"/>
+                                 <InputNumber min={0} max={10} defaultValue={0}  onChange={this.onChangeNumberB} />
+                                 </Card>
+                             </Col>
+                             
+                             </Row>
+ 
+                         <div style={{ background: '#DCDCDC', marginTop: '5%'}}></div>
+                             <Row gutter={16}>
+                             <Col span={8}>
+                                 <Card title="Card title" bordered={false}>
+                                 <img src = {room4} id ="headbookct" class = "picture"/>
+                                 <InputNumber min={0} max={10} defaultValue={0}  onChange={this.onChangeNumber5d} />
+                                 </Card>
+                             </Col>
+                             
+                             <Col span={8}>
+                                 <Card title="Card title" bordered={false}>
+                                 <img src = {room5} id ="headbookct" class = "picture"/>
+                                 <InputNumber min={0} max={10} defaultValue={0}  onChange={this.onChangeNumberD} />
+                                 </Card>
+                             </Col>
+                             <Col span={8}>
+                                 <Card title="Card title" bordered={false}>
+                                 <img src = {room6} id ="headbookctt" class = "picture"/>
+                                 <InputNumber min={0} max={10} defaultValue={0}  onChange={this.onChangeNumber8d} />
+                                 </Card>
+                             </Col>
+ 
+                             </Row>
+                         </div>
+                         
+                     <TextArea name="Details" onChange={this.onchangeTextInput} id = "detailsBox"
+                         placeholder="รายละเอียดเพิ่มเติมเช่น ต้องการเตียงเสริม (คิดเพิ่มชุดละ 100 บาท)"
+                     />
+ 
+                     <Form.Item name="price"> 
+                        {total}
+                     </Form.Item>
+                     <Form.Item label="เงินมัดจำที่ต้องจ่าย : " name="earnest">
+                         <span className="ant-form-text">{earnest}</span>
+                     </Form.Item>
+                     <Form.Item wrapperCol={{ span: 12, offset: 6 }}>
+                         <Button type="primary" htmlType="submit">
+                             Submit
+                         </Button>
+                     </Form.Item>
+                </Form></div>
+            </div>
+         )
+     }
+ 
+ }
+ 
+ 
+ export default Form.create()(Booking);
