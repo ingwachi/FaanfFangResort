@@ -3,7 +3,7 @@ import './css/App.css';
 import Booking from './Booking/Booking';
 import TestPic from './TestPic';
 import HomePage from './HomePageInfo/HomePage';
-import ImageUpload from './ImageUpload';
+import ImageUpload from './Booking/ImageUpload';
 import Signin from './Admin/Signin';
 import BookingPage from './Booking/BookingPage';
 
