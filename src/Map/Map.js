@@ -1,7 +1,7 @@
 import React from 'react';
 import MapGoogle from './MapGoogle';
-import MapImg from './img/resort/map.jpg';
-import './css/map.css';
+import MapImg from '../img/resort/map.jpg';
+import '../css/map.css';
 
 class MapResort extends React.Component {
     render(){

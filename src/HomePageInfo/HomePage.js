@@ -2,24 +2,25 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import 'antd/dist/antd.css';
 import { Form, Menu, Modal } from 'antd';
-import Booking from './Booking';
-import './css/HomePage.css';
-import './css/navw3.css';
+import Booking from '../Booking/Booking';
+import '../css/HomePage.css';
+import '../css/navw3.css';
 import Room1 from './Room1';
 import Room2 from './Room2';
 import Room3 from './Room3';
 import Room4 from './Room4';
 import Room5 from './Room5';
 import Room6 from './Room6';
-import Map from './Map';
-import room1 from './img/room1/room.png';
-import room2 from './img/room2/room.png';
-import room3 from './img/room3/room.png';
-import room4 from './img/room4/room.png';
-import room5 from './img/room5/room.jpg';
-import room6 from './img/room6/room.jpg';
-import logo from './img/resort/logo.png';
+import Map from '../Map/Map';
+import room1 from '../img/room1/room.png';
+import room2 from '../img/room2/room.png';
+import room3 from '../img/room3/room.png';
+import room4 from '../img/room4/room.png';
+import room5 from '../img/room5/room.jpg';
+import room6 from '../img/room6/room.jpg';
+import logo from '../img/resort/logo.png';
 import Contact from './Contact';
+import Confirm from './Confirm';
 const { SubMenu } = Menu;
 
 class HomePage extends React.Component {
@@ -78,17 +79,17 @@ class HomePage extends React.Component {
                         <a href="#SmallThaiHouse" onclick="w3_close()" class="w3-bar-item w3-button w3-hover-white" id="navLabel">เรือนไทยหลังเล็ก</a>
                         <a href="#BigThaiHouse" onclick="w3_close()" class="w3-bar-item w3-button w3-hover-white" id="navLabel">เรือนไทยหลังใหญ่</a>
                     </div>
-                    <a href="#Map" onclick="w3_close()" class="w3-bar-item w3-button w3-hover-white" id="navLabel">แผนที่</a>
+                    <a href="#Map" onclick="w3_close()" class="w3-bar-item w3-button w3-hover-white" id="navLabel">แผนที่และการเดินทาง</a>
                     <a href="#Contact" onclick="w3_close()" class="w3-bar-item w3-button w3-hover-white" id="navLabel">ติดต่อเรา</a>
 
-                    <a onClick={this.showModal} class="w3-bar-item w3-button w3-hover-white" id="navLabel">จองห้องพัก</a>
+                    <a onClick={this.showModal} class="w3-bar-item w3-button w3-hover-white" id="navLabel">ตรวจสอบสถานะการจอง</a>
                     <Modal
-                        title="จองห้องพัก"
+                        title="ตรวจสอบสถานะการจอง"
                         visible={this.state.visible}
                         onOk={this.handleOk}
                         onCancel={this.handleCancel}
                     >
-                        <Booking/>
+                        <Confirm/>
                     </Modal>
 
                 </div>

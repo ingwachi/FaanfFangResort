@@ -1,22 +1,23 @@
 import React ,{Component} from 'react';
-import firebase from './firebase'
+import firebase from '../firebase'
 import 'antd/dist/antd.css';
 import { DatePicker } from 'antd';
 import { Form, Select, Input, Button,Card, Col, Row,InputNumber } from 'antd';
-import room1 from './img/room1/room.png';
-import room2 from './img/room2/room.png';
-import room3 from './img/room3/room.png';
-import room4 from './img/room4/room.png';
-import room5 from './img/room5/room.jpg';
-import room6 from './img/room6/room.jpg';
-import './css/testPic.css';
-import './css/Booking.css';
+import room1 from '../img/room1/room.png';
+import room2 from '../img/room2/room.png';
+import room3 from '../img/room3/room.png';
+import room4 from '../img/room4/room.png';
+import room5 from '../img/room5/room.jpg';
+import room6 from '../img/room6/room.jpg';
+import '../css/testPic.css';
+import '../css/Booking.css';
 const { TextArea } = Input;
 const {  RangePicker } = DatePicker;
 const db = firebase.firestore();
 const dateFormat = 'DD/MM/YYYY';
 const { Option } = Select;
-var day,num8d,numA,numB,numC,numD,num5D ;
+var day,num8d=0,numA=0,numB=0,numC=0,numD=0,num5D=0,total=0,earnest=0;
+
 Date.daysBetween = function( date1, date2 ) {
     //Get 1 day in milliseconds
     var one_day=1000*60*60*24;
@@ -29,6 +30,7 @@ Date.daysBetween = function( date1, date2 ) {
     return Math.round(difference_ms/one_day); 
 }
 class Booking extends React.Component{
+
     constructor(props){
         super(props)
 
@@ -49,7 +51,7 @@ class Booking extends React.Component{
         this.props.form.validateFields((err, values) => {
           if (!err) {
             console.log('Received values of form: ', values);
-            var total = (num8d*800)+(numA*600)+(numB*400)+((numC+numD)*500)+(num5D*700)
+             total = num8d+numB+numC+numD+num5D+numA;
             console.log('price', total);
             console.log('/2', total/2);
             db.collection("Booking").add({
@@ -65,23 +67,43 @@ class Booking extends React.Component{
         });
     };
     onChangeNumber8d = (value) => {
-        num8d = value;
-        console.log('num8d:',num8d)
+        num8d = value*800;
+        this.onChangeRoom();
+        
     }
     onChangeNumber5d = (value) => {
-        num5D = value;
+        num5D = value*700;
+        this.onChangeRoom();
     }
     onChangeNumberA = (value) => {
-        numA = value;
+        numA = value*600;
+        this.onChangeRoom();
     }
     onChangeNumberB = (value) => {
-        numB = value;
+        numB = value*400;
+        this.onChangeRoom();
     }
-    onChangeNumberC = (value) => {
-        numC = value;
+    onChangeNumberC= (value) => {
+        numC = value*500;
+        this.onChangeRoom();
+
     }
     onChangeNumberD = (value) => {
-        numD = value;
+        numD = value*500;
+        console.log(numD);
+        this.onChangeRoom();
+    }
+    onChangeRoom = () => {
+        total = num8d+numB+numC+numD+num5D+numA;
+        earnest = total/2;
+        console.log(total);
+        this.setState({
+            Price :total,
+            Earnest :earnest,
+        },)
+
+        //super.forceUpdate();
+    
     }
     onChangeDate = (date, dateString) => {
         console.log(date, dateString);
@@ -161,19 +183,19 @@ class Booking extends React.Component{
                             <Col span={8}>
                                 <Card  title="Card title"  bordered={false}>
                                 <img src = {room1} id ="headbookct" class = "editpic"/>
-                                    <InputNumber min={0} max={10} defaultValue={0}  onChange={this.onChangeNumber8d}/>
+                                    <InputNumber min={0} max={10} defaultValue={0}  onChange={this.onChangeNumberA}/>
                             </Card>
                             </Col>
                             <Col span={8}>
                                 <Card title="Card title" bordered={false}>
                                 <img src = {room2} id ="headbookct" class = "picture"/>
-                                <InputNumber min={0} max={10} defaultValue={0}  onChange={this.onChangeNumberA} />
+                                <InputNumber min={0} max={10} defaultValue={0}  onChange={this.onChangeNumberC} />
                                 </Card>
                             </Col>
                             <Col span={8}>
                                 <Card title="Card title" bordered={false}>
                                 <img src = {room3} id ="headbookct" class = "picture"/>
-                                <InputNumber min={0} max={10} defaultValue={0}  onChange={this.onChangeNumber5d} />
+                                <InputNumber min={0} max={10} defaultValue={0}  onChange={this.onChangeNumberB} />
                                 </Card>
                             </Col>
                             
@@ -184,20 +206,20 @@ class Booking extends React.Component{
                             <Col span={8}>
                                 <Card title="Card title" bordered={false}>
                                 <img src = {room4} id ="headbookct" class = "picture"/>
-                                <InputNumber min={0} max={10} defaultValue={0}  onChange={this.onChangeNumberD} />
+                                <InputNumber min={0} max={10} defaultValue={0}  onChange={this.onChangeNumber5d} />
                                 </Card>
                             </Col>
                             
                             <Col span={8}>
                                 <Card title="Card title" bordered={false}>
                                 <img src = {room5} id ="headbookct" class = "picture"/>
-                                <InputNumber min={0} max={10} defaultValue={0}  onChange={this.onChangeNumberC} />
+                                <InputNumber min={0} max={10} defaultValue={0}  onChange={this.onChangeNumberD} />
                                 </Card>
                             </Col>
                             <Col span={8}>
                                 <Card title="Card title" bordered={false}>
                                 <img src = {room6} id ="headbookctt" class = "picture"/>
-                                <InputNumber min={0} max={10} defaultValue={0}  onChange={this.onChangeNumberB} />
+                                <InputNumber min={0} max={10} defaultValue={0}  onChange={this.onChangeNumber8d} />
                                 </Card>
                             </Col>
 
@@ -208,11 +230,11 @@ class Booking extends React.Component{
                         placeholder="รายละเอียดเพิ่มเติมเช่น ต้องการเตียงเสริม (คิดเพิ่มชุดละ 100 บาท)"
                     />
 
-                    <Form.Item label="ยอดค่าใช้จ่ายทั้งหมด : " name="price"> 
-                        <span className="ant-form-text">0</span>
+                    <Form.Item name="price"> 
+                       {this.Price}
                     </Form.Item>
                     <Form.Item label="เงินมัดจำที่ต้องจ่าย : " name="earnest">
-                        <span className="ant-form-text">0</span>
+                        <span className="ant-form-text">{this.Earnest}</span>
                     </Form.Item>
                     <Form.Item wrapperCol={{ span: 12, offset: 6 }}>
                         <Button type="primary" htmlType="submit">

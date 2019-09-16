@@ -1,7 +1,7 @@
 import React from 'react';
-import firebase from './firebase.js';
+import firebase from '../firebase.js';
 import { Form, Icon, Input, Button, Checkbox, message } from 'antd';
-import './css/signin.css'
+import '../css/signin.css'
 
 class Signin extends React.Component {
 

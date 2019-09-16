@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
 import './css/App.css';
-import Booking from './Booking';
+import Booking from './Booking/Booking';
 import TestPic from './TestPic';
-import HomePage from './HomePage';
+import HomePage from './HomePageInfo/HomePage';
 import ImageUpload from './ImageUpload';
-import UploadRoomAdmin from './UploadRoomAdmin';
-import Signin from './Signin';
+import Signin from './Admin/Signin';
+import BookingPage from './Booking/BookingPage';
 
 
 class App extends React.Component {
@@ -13,10 +13,10 @@ class App extends React.Component {
   return (
     <div className="App">
       <HomePage/>
+      {/* <BookingPage/> */}
       {/* <Signin/> */}
       {/* <Booking/> */}
       {/* <ImageUpload/> */}
-      {/* <UploadRoomAdmin/> */}
     </div>
   );
   }

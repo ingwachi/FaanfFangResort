@@ -1,6 +1,6 @@
 import React from 'react';
 import { Form} from 'antd';
-import './css/contact.css'
+import '../css/contact.css'
 class Contact extends React.Component {
     render() {
         return (
