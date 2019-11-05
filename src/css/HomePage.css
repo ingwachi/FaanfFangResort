@@ -1,4 +1,8 @@
+.body,h1,h2,h3,h4,h5 {
 
+  font-family: "Poppins", sans-serif;
+  text-align: left;
+}
 
 .picture{
   width: 90%;
@@ -26,20 +30,15 @@
   border:5px solid coral
 }
 
-
-.body,h1,h2,h3,h4,h5 {
-
-  font-family: "Poppins", sans-serif;
-  text-align: left;
-}
-
 .firstCha{
+  font-family: "Poppins", sans-serif;
   color: coral;
   font-size: 70px;
 }
 
 .smallCha{
   color: coral;
+  font-family: "Poppins", sans-serif;
 }
 
 .container{
@@ -61,7 +60,7 @@
   opacity: 0;
   position: absolute;
   top: 42%;
-  left: 15.5%;
+  left: 10%;
   font-size: 25px;
 }
 
@@ -71,7 +70,7 @@
   opacity: 0;
   position: absolute;
   top: 42%;
-  left: 25%;
+  left: 20%;
   font-size: 25px;
 }
 
@@ -84,6 +83,7 @@
 
 #container{
   margin-left: 21%;
+  margin-top: 3%;
 }
 
 .logo{

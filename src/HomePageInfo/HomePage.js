@@ -1,7 +1,11 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import 'antd/dist/antd.css';
-import { Form, Menu, Modal } from 'antd';
+import { Form, Menu, Modal, DatePicker } from 'antd';
+import { Button } from 'semantic-ui-react';
+import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom';
+import axios from 'axios';
+import { connect } from 'react-redux';
 import Booking from '../Booking/Booking';
 import '../css/HomePage.css';
 import '../css/navw3.css';
@@ -22,8 +26,23 @@ import logo from '../img/resort/logo.png';
 import Contact from './Contact';
 import Confirm from './Confirm';
 const { SubMenu } = Menu;
+const { RangePicker } = DatePicker;
+const dateFormat = 'DD/MM/YYYY';
+var dateList = [];
 
 class HomePage extends React.Component {
+
+    constructor() {
+        super();
+        this.state = {
+            typeA: 10,
+            typeB: 10,
+            typeC: 10,
+            typeD: 10,
+            typeE: 10,
+            typeF: 10
+        };
+    }
 
     handleDropdownClick = () => {
         var dropdown = document.getElementsByClassName("dropdown-btn");
@@ -62,6 +81,58 @@ class HomePage extends React.Component {
         });
     };
 
+    onChangeDate = (date, dateString) => {
+        while (dateList.length) {
+            dateList.pop();
+        }
+        var date1 = date[0]._d;
+        var date2 = date[1]._d;
+        var dd = date1.getDate();
+        var mm = date1.getMonth() + 1;
+        var yy = date1.getFullYear();
+        var myDateString = dd + "-" + mm + "-" + yy;
+        dateList.push(myDateString);
+        var d = myDateString;
+        this.props.dispatch({
+            type: 'ADD_DATE',
+            d
+        })
+        this.calDiff(date1, date2)
+    }
+
+    calDiff = (date1, date2) => {
+        var diff;
+        var count = 0;
+        if (date1 && date2) {
+            diff = Math.floor((date2.getTime() - date1.getTime()) / 86400000);
+            while (date1.getTime() < date2.getTime()) {
+                date1.setDate(date1.getDate() + 1);
+                var dd = date1.getDate();
+                var mm = date1.getMonth() + 1;
+                var yy = date1.getFullYear();
+                var myDateString = dd + "-" + mm + "-" + yy;
+                dateList.push(myDateString);
+                var d = myDateString;
+                this.props.dispatch({
+                    type: 'ADD_DATE',
+                    d
+                })
+                count++;
+            }
+            date1.setDate(date1.getDate() - count )            
+        }
+    }
+
+    // onSubmit = (e) => {
+    //     e.preventDefault();
+    //     dateList.forEach(element => {   
+    //         console.log(element);
+    //         const date = element
+    //         const {typeA, typeB} = this.state;
+    //         axios.post('/addAvailableRoom', ({date, typeA, typeB}))
+    //     });
+    // }
+
     render() {
         return (
             <div>
@@ -89,13 +160,18 @@ class HomePage extends React.Component {
                         onOk={this.handleOk}
                         onCancel={this.handleCancel}
                     >
-                        <Confirm/>
+                        <Confirm />
                     </Modal>
 
                 </div>
 
                 <div class="w3-container" id="container">
-                    <h1><b class="firstCha">F</b><b class="w3-jumbo">aang<b class="firstCha">F</b>ang Resort</b></h1>
+                    <h1><b class="firstCha">F</b><b class="w3-jumbo" style={{ fontFamily: "Poppins, sans-serif" }}>aang<b class="firstCha">F</b>ang Resort</b></h1>
+                    <div style={{marginTop:"4%"}}>
+                        <b style={{ fontFamily: "Kanit, sans-serif", fontSize:"25px", marginRight:"3%", color:"#616161" }} >ค้นหาห้องพัก</b>
+                        <RangePicker onChange={this.onChangeDate} format={dateFormat} />
+                        <Link to="/ShowAvailableRoom"><Button style={{ marginLeft: "2%" }}>Search</Button></Link>
+                    </div>
                     <h1><b class="smallCha">Room Types</b></h1>
                     <hr class="w3-round"></hr>
 
@@ -155,7 +231,7 @@ class HomePage extends React.Component {
                         <Room6 />
                     </div>
                     <hr />
-                    <div id="Map">
+                    <div>
                         <Map />
                     </div>
                 </div >
@@ -168,5 +244,4 @@ class HomePage extends React.Component {
 
 }
 
-
-export default Form.create()(HomePage);
+export default connect()(HomePage);
