@@ -6,37 +6,78 @@ import axios from 'axios';
 import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { InputNumber } from 'antd';
+import useForm from "react-hook-form";
 var dateList = [];
 class ShowAvailableRoom extends Component {
+
 
     state = {
         mintypeA: 10,
         mintypeB: 10,
+        mintypeC: 10,
+        mintypeD: 10,
+        mintypeE: 10,
+        mintypeF: 10,
         reserveA: 0,
         reserveB: 0,
+        reserveC: 0,
+        reserveD: 0,
+        reserveE: 0,
+        reserveF: 0,
         typeA: 0,
-        typeB: 0
+        typeB: 0,
+        typeC: 0,
+        typeD: 0,
+        typeE: 0,
+        typeF: 0,
+        name: '',
+        phoneNum: '',
+
     }
 
     onChangeRoomA = (value) => {
         console.log('changed', value);
         this.setState({ reserveA: value })
-        this.setState({ typeA: this.state.mintypeA - value })
     }
 
     onChangeRoomB = (value) => {
         console.log('changed', value);
         this.setState({ reserveB: value })
-        this.setState({ typeB: this.state.mintypeB - value })
     }
 
-    onSubmit = (e) => {
-        console.log("eiei", dateList)
+    onChangeRoomC = (value) => {
+        console.log('changed', value);
+        this.setState({ reserveC: value })
+    }
+
+    onChangeRoomD = (value) => {
+        console.log('changed', value);
+        this.setState({ reserveD: value })
+    }
+
+    onChangeRoomE = (value) => {
+        console.log('changed', value);
+        this.setState({ reserveE: value })
+    }
+
+    onChangeRoomF = (value) => {
+        console.log('changed', value);
+        this.setState({ reserveF: value })
+    }
+
+    onSubmit = () => {
         console.log(dateList);
+        console.log(this.state.name)
         for (let i = 0; i < dateList.length - 1; i++) {
             axios.get(`/${dateList[i]}`).then(resp => {
-                const { typeA, typeB } = this.state;
-                axios.put(`/updateRoom/${dateList[i]}`, ({ typeA, typeB })).then(response => {
+                this.setState({ typeA: resp.data.typeA - this.state.reserveA })
+                this.setState({ typeB: resp.data.typeB - this.state.reserveB })
+                this.setState({ typeC: resp.data.typeC - this.state.reserveC })
+                this.setState({ typeD: resp.data.typeD - this.state.reserveD })
+                this.setState({ typeE: resp.data.typeE - this.state.reserveE })
+                this.setState({ typeF: resp.data.typeF - this.state.reserveF })
+                const { typeA, typeB, typeC, typeD, typeE, typeF } = this.state;
+                axios.put(`/updateRoom/${dateList[i]}`, ({ typeA, typeB, typeC, typeD, typeE, typeF })).then(response => {
                     console.log(response)
                 })
             })
@@ -44,6 +85,10 @@ class ShowAvailableRoom extends Component {
 
         console.log('Room A Reserved :' + this.state.reserveA)
         console.log('Room B Reserved :' + this.state.reserveB)
+        console.log('Room C Reserved :' + this.state.reserveC)
+        console.log('Room D Reserved :' + this.state.reserveD)
+        console.log('Room E Reserved :' + this.state.reserveE)
+        console.log('Room F Reserved :' + this.state.reserveF)
     }
 
     addAllDate = (date) => {
@@ -57,7 +102,6 @@ class ShowAvailableRoom extends Component {
     componentDidMount() {
         this.addAllDate(this.props.dates)
         this.show();
-
     }
 
     show = () => {
@@ -71,6 +115,22 @@ class ShowAvailableRoom extends Component {
                 if (resp.data.typeB < this.state.mintypeB) {
                     this.setState({ mintypeB: resp.data.typeB })
                 }
+
+                if (resp.data.typeC < this.state.mintypeC) {
+                    this.setState({ mintypeC: resp.data.typeC })
+                }
+
+                if (resp.data.typeD < this.state.mintypeD) {
+                    this.setState({ mintypeD: resp.data.typeD })
+                }
+
+                if (resp.data.typeE < this.state.mintypeE) {
+                    this.setState({ mintypeE: resp.data.typeE })
+                }
+
+                if (resp.data.typeF < this.state.mintypeF) {
+                    this.setState({ mintypeF: resp.data.typeF })
+                }
             })
         })
     }
@@ -79,16 +139,18 @@ class ShowAvailableRoom extends Component {
     showState = () => {
         console.log("Room Type A Available : " + this.state.mintypeA)
         console.log("Room Type B Available : " + this.state.mintypeB)
+        console.log("Room Type C Available : " + this.state.mintypeC)
+        console.log("Room Type D Available : " + this.state.mintypeD)
+        console.log("Room Type E Available : " + this.state.mintypeE)
+        console.log("Room Type F Available : " + this.state.mintypeF)
     }
 
-    handleSubmit = e => {
-        e.preventDefault();
-        this.props.form.validateFields((err, values) => {
-            if (!err) {
-                console.log('Received values of form: ', values);
-            }
-        });
-    };
+
+    handleChangeName = (value) => {
+        console.log("Name", value)
+        this.setState({ name: value })
+
+    }
 
     render() {
         return (
@@ -102,22 +164,23 @@ class ShowAvailableRoom extends Component {
                 <div>
                     จำนวนห้องที่ต้องการ <InputNumber min={0} max={this.state.mintypeB} defaultValue={0} onChange={(value) => this.onChangeRoomB(value)} />
                 </div>
-                {/* <Form
-                    ref="form"
-                    onSubmit={this.onSubmit}
-                >
-                    <Input
-                        type="text"
-                        label="Test Input"
-                        onChange={(e) => { this.setState({ value: e.target.value }) }}
-                        value={this.state.value}
-                        validators={['required']}
-                        errorMessages={['this field is required']}
-                        width={6}
-                    />
-
-                    <Button color="teal">Submit</Button>
-                </Form> */}
+                <div>Room Type C Available : {this.state.mintypeC}</div>
+                <div>
+                    จำนวนห้องที่ต้องการ <InputNumber min={0} max={this.state.mintypeC} defaultValue={0} onChange={(value) => this.onChangeRoomC(value)} />
+                </div>
+                <div>Room Type D Available : {this.state.mintypeD}</div>
+                <div>
+                    จำนวนห้องที่ต้องการ <InputNumber min={0} max={this.state.mintypeD} defaultValue={0} onChange={(value) => this.onChangeRoomD(value)} />
+                </div>
+                <div>Room Type E Available : {this.state.mintypeE}</div>
+                <div>
+                    จำนวนห้องที่ต้องการ <InputNumber min={0} max={this.state.mintypeE} defaultValue={0} onChange={(value) => this.onChangeRoomE(value)} />
+                </div>
+                <div>Room Type F Available : {this.state.mintypeF}</div>
+                <div>
+                    จำนวนห้องที่ต้องการ <InputNumber min={0} max={this.state.mintypeF} defaultValue={0} onChange={(value) => this.onChangeRoomF(value)} />
+                </div>
+                
 
                 <Button onClick={(e) => this.onSubmit(e)}>Submit</Button>
             </div>

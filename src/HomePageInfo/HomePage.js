@@ -123,15 +123,15 @@ class HomePage extends React.Component {
         }
     }
 
-    // onSubmit = (e) => {
-    //     e.preventDefault();
-    //     dateList.forEach(element => {   
-    //         console.log(element);
-    //         const date = element
-    //         const {typeA, typeB} = this.state;
-    //         axios.post('/addAvailableRoom', ({date, typeA, typeB}))
-    //     });
-    // }
+    onSubmit = (e) => {
+        e.preventDefault();
+        dateList.forEach(element => {   
+            console.log(element);
+            const date = element
+            const {typeA, typeB, typeC, typeD, typeE, typeF} = this.state;
+            axios.post('/addAvailableRoom', ({date, typeA, typeB, typeC, typeD, typeE, typeF}))
+        });
+    }
 
     render() {
         return (
@@ -140,7 +140,7 @@ class HomePage extends React.Component {
                     <div>
                         <img src={logo} class="logo" />
                     </div>
-                    <a href="#" onclick="w3_close()" class="w3-bar-item w3-button w3-hover-white" id="navLabel">หน้าหลัก</a>
+                    <a href="#homePage" onclick="w3_close()" class="w3-bar-item w3-button w3-hover-white" id="navLabel">หน้าหลัก</a>
                     <button class="dropdown-btn" id="navLabel" onClick={this.handleDropdownClick} >รายละเอียดห้อง<i onClick={this.handleDropdownClick} class="fa fa-caret-down"></i></button>
                     <div class="dropdown-container">
                         <a href="#BigSingleHouse" onclick="w3_close()" class="w3-bar-item w3-button w3-hover-white" id="navLabel">บ้านเดี่ยวหลังใหญ่</a>
@@ -166,7 +166,7 @@ class HomePage extends React.Component {
                 </div>
 
                 <div class="w3-container" id="container">
-                    <h1><b class="firstCha">F</b><b class="w3-jumbo" style={{ fontFamily: "Poppins, sans-serif" }}>aang<b class="firstCha">F</b>ang Resort</b></h1>
+                    <h1><b id="homePage" class="firstCha">F</b><b class="w3-jumbo" style={{ fontFamily: "Poppins, sans-serif" }}>aang<b class="firstCha">F</b>ang Resort</b></h1>
                     <div style={{marginTop:"4%"}}>
                         <b style={{ fontFamily: "Kanit, sans-serif", fontSize:"25px", marginRight:"3%", color:"#616161" }} >ค้นหาห้องพัก</b>
                         <RangePicker onChange={this.onChangeDate} format={dateFormat} />
@@ -231,7 +231,7 @@ class HomePage extends React.Component {
                         <Room6 />
                     </div>
                     <hr />
-                    <div>
+                    <div id="Map">
                         <Map />
                     </div>
                 </div >
