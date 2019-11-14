@@ -8,6 +8,7 @@ import ImageUpload from './Booking/ImageUpload';
 import Signin from './Admin/Signin';
 import BookingPage from './Booking/BookingPage';
 import ShowAvailableRoom from './ShowAvailableRoom';
+import FormInfo from './FormInfo';
 
 class App extends React.Component {
   render() {
@@ -23,6 +24,7 @@ class App extends React.Component {
       <Switch>
         <Route exact path='/' component={HomePage} />
         <Route path='/ShowAvailableRoom' component={ShowAvailableRoom}/>
+        <Route path='/CustomerInfo' component={FormInfo}/>
         {/* <Route path='/SellAndBuy' component={SellAndBuy} /> */}
         {/* <Route path='/SellPage' component={Category}/>
         <Route path='/BuyPage' component={BuyCategory}/>

@@ -8,9 +8,10 @@ import { connect } from 'react-redux';
 import { InputNumber } from 'antd';
 import useForm from "react-hook-form";
 var dateList = [];
+
+
 class ShowAvailableRoom extends Component {
-
-
+    
     state = {
         mintypeA: 10,
         mintypeB: 10,
@@ -30,9 +31,7 @@ class ShowAvailableRoom extends Component {
         typeD: 0,
         typeE: 0,
         typeF: 0,
-        name: '',
-        phoneNum: '',
-
+        cost: 0,
     }
 
     onChangeRoomA = (value) => {
@@ -180,9 +179,9 @@ class ShowAvailableRoom extends Component {
                 <div>
                     จำนวนห้องที่ต้องการ <InputNumber min={0} max={this.state.mintypeF} defaultValue={0} onChange={(value) => this.onChangeRoomF(value)} />
                 </div>
-                
+            
 
-                <Button onClick={(e) => this.onSubmit(e)}>Submit</Button>
+                <Link to='/CustomerInfo'><Button onClick={(e) => this.onSubmit(e)}>Submit</Button></Link>
             </div>
         );
     }
@@ -193,7 +192,6 @@ const mapStateToProps = (state) => {
         dates: state
     }
 }
-
 export default connect(mapStateToProps)(ShowAvailableRoom);
 
 

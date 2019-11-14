@@ -4,6 +4,7 @@ import 'antd/dist/antd.css';
 import { Form, Menu, Modal, DatePicker } from 'antd';
 import { Button } from 'semantic-ui-react';
 import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom';
+import moment from 'moment';
 import axios from 'axios';
 import { connect } from 'react-redux';
 import Booking from '../Booking/Booking';
@@ -29,6 +30,40 @@ const { SubMenu } = Menu;
 const { RangePicker } = DatePicker;
 const dateFormat = 'DD/MM/YYYY';
 var dateList = [];
+
+function range(start, end) {
+    const result = [];
+    for (let i = start; i < end; i++) {
+      result.push(i);
+    }
+    return result;
+  }
+function disabledDate(current) {
+    // Can not select days before today and today
+    if (!current) {
+        // allow empty select
+        return false;
+      }
+      const date = moment();
+      date.hour(0);
+      date.minute(0);
+      date.second(0);
+      return current.valueOf() < date.valueOf();  // can not select days before today
+  }
+  function disabledRangeTime(_, type) {
+    if (type === 'start') {
+      return {
+        disabledHours: () => range(0, 60).splice(4, 20),
+        disabledMinutes: () => range(30, 60),
+        disabledSeconds: () => [55, 56],
+      };
+    }
+    return {
+      disabledHours: () => range(0, 60).splice(20, 4),
+      disabledMinutes: () => range(0, 31),
+      disabledSeconds: () => [55, 56],
+    };
+  }
 
 class HomePage extends React.Component {
 
@@ -169,7 +204,8 @@ class HomePage extends React.Component {
                     <h1><b id="homePage" class="firstCha">F</b><b class="w3-jumbo" style={{ fontFamily: "Poppins, sans-serif" }}>aang<b class="firstCha">F</b>ang Resort</b></h1>
                     <div style={{marginTop:"4%"}}>
                         <b style={{ fontFamily: "Kanit, sans-serif", fontSize:"25px", marginRight:"3%", color:"#616161" }} >ค้นหาห้องพัก</b>
-                        <RangePicker onChange={this.onChangeDate} format={dateFormat} />
+                        <RangePicker disabledDate={disabledDate}
+                            disabledTime={disabledRangeTime} onChange={this.onChangeDate} format={dateFormat} />
                         <Link to="/ShowAvailableRoom"><Button style={{ marginLeft: "2%" }}>Search</Button></Link>
                     </div>
                     <h1><b class="smallCha">Room Types</b></h1>
