@@ -11,8 +11,10 @@ var dateList = [];
 
 
 class ShowAvailableRoom extends Component {
-    
+
     state = {
+        dateCheckIn: '',
+        dateCheckOut: '',
         mintypeA: 10,
         mintypeB: 10,
         mintypeC: 10,
@@ -31,7 +33,7 @@ class ShowAvailableRoom extends Component {
         typeD: 0,
         typeE: 0,
         typeF: 0,
-        cost: 0,
+        cost: 300,
     }
 
     onChangeRoomA = (value) => {
@@ -65,29 +67,38 @@ class ShowAvailableRoom extends Component {
     }
 
     onSubmit = () => {
+        console.log(this.state.reserveA)
         console.log(dateList);
-        console.log(this.state.name)
         for (let i = 0; i < dateList.length - 1; i++) {
             axios.get(`/${dateList[i]}`).then(resp => {
-                this.setState({ typeA: resp.data.typeA - this.state.reserveA })
-                this.setState({ typeB: resp.data.typeB - this.state.reserveB })
-                this.setState({ typeC: resp.data.typeC - this.state.reserveC })
-                this.setState({ typeD: resp.data.typeD - this.state.reserveD })
-                this.setState({ typeE: resp.data.typeE - this.state.reserveE })
-                this.setState({ typeF: resp.data.typeF - this.state.reserveF })
+                this.setState({
+                    typeA: resp.data.typeA - this.state.reserveA,
+                    typeB: resp.data.typeB - this.state.reserveB,
+                    typeC: resp.data.typeC - this.state.reserveC,
+                    typeD: resp.data.typeD - this.state.reserveD,
+                    typeE: resp.data.typeE - this.state.reserveE,
+                    typeF: resp.data.typeF - this.state.reserveF
+                })
                 const { typeA, typeB, typeC, typeD, typeE, typeF } = this.state;
                 axios.put(`/updateRoom/${dateList[i]}`, ({ typeA, typeB, typeC, typeD, typeE, typeF })).then(response => {
                     console.log(response)
                 })
             })
         }
-
+        const { cost, dateCheckIn, dateCheckOut, reserveA, reserveB, reserveC, reserveD, reserveE, reserveF } = this.state
+        axios.post('/addTempData', ({ cost, dateCheckIn, dateCheckOut, reserveA, reserveB, reserveC, reserveD, reserveE, reserveF })).then(res => {
+            console.log(res)
+        })
         console.log('Room A Reserved :' + this.state.reserveA)
         console.log('Room B Reserved :' + this.state.reserveB)
         console.log('Room C Reserved :' + this.state.reserveC)
         console.log('Room D Reserved :' + this.state.reserveD)
         console.log('Room E Reserved :' + this.state.reserveE)
         console.log('Room F Reserved :' + this.state.reserveF)
+        console.log('Cost : ', this.state.cost)
+        console.log('CheckIn : ', this.state.dateCheckIn)
+        console.log('CheckOut : ', this.state.dateCheckOut)
+        window.location.href = "/CustomerInfo";
     }
 
     addAllDate = (date) => {
@@ -99,8 +110,13 @@ class ShowAvailableRoom extends Component {
     }
 
     componentDidMount() {
+        this._isMounted = true;
         this.addAllDate(this.props.dates)
         this.show();
+        this.setState({
+            dateCheckIn: dateList[0],
+            dateCheckOut: dateList[dateList.length - 1]
+        })
     }
 
     show = () => {
@@ -108,7 +124,6 @@ class ShowAvailableRoom extends Component {
             axios.get(`/${date}`).then(resp => {
                 if (resp.data.typeA < this.state.mintypeA) {
                     this.setState({ mintypeA: resp.data.typeA })
-
                 }
 
                 if (resp.data.typeB < this.state.mintypeB) {
@@ -135,21 +150,14 @@ class ShowAvailableRoom extends Component {
     }
 
 
-    showState = () => {
-        console.log("Room Type A Available : " + this.state.mintypeA)
-        console.log("Room Type B Available : " + this.state.mintypeB)
-        console.log("Room Type C Available : " + this.state.mintypeC)
-        console.log("Room Type D Available : " + this.state.mintypeD)
-        console.log("Room Type E Available : " + this.state.mintypeE)
-        console.log("Room Type F Available : " + this.state.mintypeF)
-    }
-
-
-    handleChangeName = (value) => {
-        console.log("Name", value)
-        this.setState({ name: value })
-
-    }
+    // showState = () => {
+    //     console.log("Room Type A Available : " + this.state.mintypeA)
+    //     console.log("Room Type B Available : " + this.state.mintypeB)
+    //     console.log("Room Type C Available : " + this.state.mintypeC)
+    //     console.log("Room Type D Available : " + this.state.mintypeD)
+    //     console.log("Room Type E Available : " + this.state.mintypeE)
+    //     console.log("Room Type F Available : " + this.state.mintypeF)
+    // }
 
     render() {
         return (
@@ -179,9 +187,10 @@ class ShowAvailableRoom extends Component {
                 <div>
                     จำนวนห้องที่ต้องการ <InputNumber min={0} max={this.state.mintypeF} defaultValue={0} onChange={(value) => this.onChangeRoomF(value)} />
                 </div>
-            
 
-                <Link to='/CustomerInfo'><Button onClick={(e) => this.onSubmit(e)}>Submit</Button></Link>
+
+                {/* <Link to='/CustomerInfo'><Button onClick={(e) => this.onSubmit(e)}>Submit</Button></Link> */}
+                <Button onClick={(e) => this.onSubmit(e)}>Submit</Button>
             </div>
         );
     }
