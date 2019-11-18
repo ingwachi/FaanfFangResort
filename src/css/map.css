@@ -1,10 +1,11 @@
 .setImgMap{
     width: 80%;
-    margin-bottom: 5%;
+    margin-bottom: 1%;
+    margin-left: 10%;
 }
 
-#setMapGoogle{
-    margin-left: 10%;
+#setMap{
+    margin-left: 8%;
     margin-bottom: 5%;
 }
 

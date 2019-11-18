@@ -24,10 +24,10 @@ class Contact extends React.Component {
                             <div class="col-md-4 mb-3 mb-md-0">
                                 <div class="card py-4 h-100">
                                     <div class="card-body text-center">
-                                        <h4 class="text-uppercase m-0" style={{fontFamily:'Poppins, sans-serif', fontSize:'15px'}}>Email</h4>
+                                        <h4 class="text-uppercase m-0" style={{fontFamily:'Poppins, sans-serif', fontSize:'15px'}}>Line ID</h4>
                                         <hr class="my-4" />
                                         <div class="small text-black-50">
-                                            <a href="#" style={{fontFamily:'Poppins, sans-serif' , fontSize:'15px'}}>fang-fangs@hotmail.com</a>
+                                            <a href="#" style={{fontFamily:'Poppins, sans-serif' , fontSize:'15px'}}>fangfangresort</a>
                                         </div>
                                     </div>
                                 </div>
@@ -37,9 +37,9 @@ class Contact extends React.Component {
                                 <div class="card py-4 h-100">
                                     <div class="card-body text-center">
                                         <i class="fas fa-mobile-alt text-primary mb-2"></i>
-                                        <h4 class="text-uppercase m-0" style={{fontFamily:'Poppins, sans-serif', fontSize:'15px'}}>Phone</h4>
+                                        <h4 class="text-uppercase m-0" style={{fontFamily:'Poppins, sans-serif', fontSize:'15px'}}>Tell</h4>
                                         <hr class="my-4" />
-                                        <div class="small text-black-50" style={{fontFamily:'Poppins, sans-serif' , fontSize:'15px'}}>0819404674</div>
+                                        <div class="small text-black-50" style={{fontFamily:'Poppins, sans-serif' , fontSize:'15px'}}>08-6827-8255</div>
                                     </div>
                                 </div>
                             </div>

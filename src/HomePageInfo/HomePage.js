@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import 'antd/dist/antd.css';
 import { Form, Menu, Modal, DatePicker } from 'antd';
 import { Button } from 'semantic-ui-react';
-import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import moment from 'moment';
 import axios from 'axios';
 import { connect } from 'react-redux';
@@ -166,6 +166,12 @@ class HomePage extends React.Component {
             const { typeA, typeB, typeC, typeD, typeE, typeF } = this.state;
             axios.post('/addAvailableRoom', ({ date, typeA, typeB, typeC, typeD, typeE, typeF }))
         });
+
+    }
+
+    // ลบข้อมูลออกจาก temp
+    componentDidMount() {
+        axios.delete('/deleteTempData')
     }
 
     render() {
@@ -204,10 +210,11 @@ class HomePage extends React.Component {
                     <h1><b id="homePage" class="firstCha">F</b><b class="w3-jumbo" style={{ fontFamily: "Poppins, sans-serif" }}>aang<b class="firstCha">F</b>ang Resort</b></h1>
                     <div style={{ marginTop: "4%" }}>
                         <b style={{ fontFamily: "Kanit, sans-serif", fontSize: "25px", marginRight: "3%", color: "#616161" }} >ค้นหาห้องพัก</b>
-                        {/* <RangePicker disabledDate={disabledDate}
-                            disabledTime={disabledRangeTime} onChange={this.onChangeDate} format={dateFormat} /> */}
-                        <RangePicker onChange={this.onChangeDate} format={dateFormat} />
-                        <Link to="/ShowAvailableRoom"><Button style={{ marginLeft: "2%" }}>Search</Button></Link>
+                        <RangePicker disabledDate={disabledDate}
+                            disabledTime={disabledRangeTime} onChange={this.onChangeDate} format={dateFormat} />
+                        {/* <RangePicker onChange={this.onChangeDate} format={dateFormat} /> */}
+                        <Link to="/ShowAvailableRoom"><Button style={{ marginLeft: "2%", fontFamily: "Kanit, sans-serif" }} >ค้นหาห้องพัก</Button></Link>
+                        {/* <Button style={{ marginLeft: "2%" }} onClick={this.onSubmit}>Search</Button> */}
                     </div>
                     <h1><b class="smallCha">Room Types</b></h1>
                     <hr class="w3-round"></hr>

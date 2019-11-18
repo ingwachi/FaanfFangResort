@@ -4,11 +4,11 @@ import 'antd/dist/antd.css';
 import { Form, Menu, Modal } from 'antd';
 import Booking from './Booking';
 import '../css/BookingPage.css';
-import ShowAvailableRoom from './ShowAvailableRoom'
+import FormInfo from './FormInfo';
 import logo from '../img/resort/logo.png'
 import qrCode from '../img/resort/qrCode.jpg';
 
-class BookingPage extends React.Component {
+class InfoPage extends React.Component {
 
     render() {
         return (
@@ -21,10 +21,10 @@ class BookingPage extends React.Component {
                 </div>
                 <div class="w3-container" id="containerShow">
                     <h1><b class="firstCha">F</b><b class="w3-jumbo">aang<b class="firstCha">F</b>ang Resort</b></h1>
-                    <h1><b class="headLabel">เลือกจำนวนและประเภทห้องพัก</b></h1>
+                    <h1><b class="headLabel">กรุณากรอกข้อมูลของท่าน</b></h1>
                     <hr class="w3-round"></hr>
                     <div>
-                        <ShowAvailableRoom />
+                        <FormInfo />
                     </div>
                 </div>
 
@@ -32,4 +32,4 @@ class BookingPage extends React.Component {
         );
     }
 }
-export default Form.create()(BookingPage);
+export default InfoPage;

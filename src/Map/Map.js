@@ -1,7 +1,9 @@
 import React from 'react';
-import MapGoogle from './MapGoogle';
 import MapImg from '../img/resort/map.jpg';
 import '../css/map.css';
+import MapBox from './MapBox';
+import '../css/MapBox.css'
+import {Card} from 'antd';
 
 class MapResort extends React.Component {
     render(){
@@ -11,8 +13,10 @@ class MapResort extends React.Component {
                 <hr class="w3-round"></hr>
                 <img src={MapImg} class="setImgMap"/>
                 <h2 style={{textAlign:"center", marginButton:"3%", fontFamily: "Poppins, sans-serif"}}>Google Map </h2>
-                <div id="setMapGoogle">
-                    <MapGoogle/>
+                <div id="setMap">
+                    <Card style={{width: 900 ,height: 600}}>
+                        <MapBox/>
+                    </Card>
                 </div>
             </div>
         );

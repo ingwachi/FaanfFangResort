@@ -1,11 +1,11 @@
 .sidenavBooking {
     height: 100%;
-    width: 20%;
+    width: 18%;
     position: fixed;
     z-index: 1;
     top: 0;
     left: 0;
-    background-color: coral;
+    background-color: #616161;
     overflow-x: hidden;
     padding-top: 20px;
   }
@@ -13,4 +13,20 @@
   .headLabel{
     font-family: 'Kanit', sans-serif;
     color: coral;
+  }
+
+  #containerShow {
+    margin-left: 20%;
+    margin-top: 3%;
+  }
+
+  .logo{
+    width: 100%;
+    margin-bottom: 5%;
+  }
+
+  .qr{
+    width: 90%;
+    margin-left: 4%;
+    margin-top: 20%;
   }
