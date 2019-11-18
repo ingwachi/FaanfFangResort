@@ -1,13 +1,12 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import 'antd/dist/antd.css';
-import { Form, Menu, Modal, DatePicker } from 'antd';
+import { Menu, Modal, DatePicker, message } from 'antd';
 import { Button } from 'semantic-ui-react';
-import { Link } from 'react-router-dom';
+import { Link, useHistory, Route, withRouter } from 'react-router-dom';
 import moment from 'moment';
 import axios from 'axios';
 import { connect } from 'react-redux';
-import Booking from '../Booking/Booking';
 import '../css/HomePage.css';
 import '../css/navw3.css';
 import Room1 from './Room1';
@@ -30,6 +29,7 @@ const { SubMenu } = Menu;
 const { RangePicker } = DatePicker;
 const dateFormat = 'DD/MM/YYYY';
 var dateList = [];
+
 
 function range(start, end) {
     const result = [];
@@ -71,11 +71,11 @@ class HomePage extends React.Component {
         super();
         this.state = {
             typeA: 10,
-            typeB: 10,
-            typeC: 10,
-            typeD: 10,
-            typeE: 10,
-            typeF: 10
+            typeB: 8,
+            typeC: 6,
+            typeD: 1,
+            typeE: 5,
+            typeF: 2
         };
     }
 
@@ -120,6 +120,9 @@ class HomePage extends React.Component {
         while (dateList.length) {
             dateList.pop();
         }
+        this.props.dispatch({
+            type: 'CLEAR_LIST'
+        })
         var date1 = date[0]._d;
         var date2 = date[1]._d;
         var dd = date1.getDate();
@@ -160,13 +163,21 @@ class HomePage extends React.Component {
 
     onSubmit = (e) => {
         e.preventDefault();
-        dateList.forEach(element => {
-            console.log(element);
-            const date = element
-            const { typeA, typeB, typeC, typeD, typeE, typeF } = this.state;
-            axios.post('/addAvailableRoom', ({ date, typeA, typeB, typeC, typeD, typeE, typeF }))
-        });
-
+        // dateList.forEach(element => {
+        //     console.log(element);
+        //     const date = element
+        //     const { typeA, typeB, typeC, typeD, typeE, typeF } = this.state;
+        //     axios.post('/addAvailableRoom', ({ date, typeA, typeB, typeC, typeD, typeE, typeF }))
+        // });
+        if (dateList.length == 1) {
+            message.error('กรุณาเลือกวันที่ให้ถูกต้อง')
+        }
+        else if (dateList.length == 0) {
+            message.error('กรุณาเลือกช่วงวันที่ต้องการเข้าพัก');
+        } 
+        else {
+            this.props.history.push('/ShowAvailableRoom')
+        }
     }
 
     // ลบข้อมูลออกจาก temp
@@ -203,6 +214,7 @@ class HomePage extends React.Component {
                     >
                         <Confirm />
                     </Modal>
+                    <Link to='/ComfirmInfo' id="navLabel" class="w3-bar-item w3-button w3-hover-white" target="_blank" >อัพโหลดสลิปค่ามัดจำ</Link>
 
                 </div>
 
@@ -213,8 +225,8 @@ class HomePage extends React.Component {
                         <RangePicker disabledDate={disabledDate}
                             disabledTime={disabledRangeTime} onChange={this.onChangeDate} format={dateFormat} />
                         {/* <RangePicker onChange={this.onChangeDate} format={dateFormat} /> */}
-                        <Link to="/ShowAvailableRoom"><Button style={{ marginLeft: "2%", fontFamily: "Kanit, sans-serif" }} >ค้นหาห้องพัก</Button></Link>
-                        {/* <Button style={{ marginLeft: "2%" }} onClick={this.onSubmit}>Search</Button> */}
+                        {/* <Link to="/ShowAvailableRoom"><Button style={{ marginLeft: "2%", fontFamily: "Kanit, sans-serif" }} >ค้นหาห้องพัก</Button></Link> */}
+                        <Button style={{ marginLeft: "2%", fontFamily: "Kanit, sans-serif" }} onClick={this.onSubmit}>ค้นหาห้องพัก</Button>
                     </div>
                     <h1><b class="smallCha">Room Types</b></h1>
                     <hr class="w3-round"></hr>

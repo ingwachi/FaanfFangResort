@@ -2,7 +2,6 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import 'antd/dist/antd.css';
 import { Form, Menu, Modal } from 'antd';
-import Booking from './Booking';
 import '../css/BookingPage.css';
 import FormInfo from './FormInfo';
 import logo from '../img/resort/logo.png'

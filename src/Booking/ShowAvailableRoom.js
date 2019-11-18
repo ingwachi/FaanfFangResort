@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
+import ReactDOM from 'react-dom';
 import 'antd/dist/antd.css';
+import { Link, useHistory, Route, withRouter } from 'react-router-dom';
 import axios from 'axios';
 import { connect } from 'react-redux';
 import { Card, Col, Row, Button, message } from 'antd';
@@ -17,11 +19,11 @@ class ShowAvailableRoom extends Component {
         dateCheckIn: '',
         dateCheckOut: '',
         mintypeA: 10,
-        mintypeB: 10,
-        mintypeC: 10,
-        mintypeD: 10,
-        mintypeE: 10,
-        mintypeF: 10,
+        mintypeB: 8,
+        mintypeC: 6,
+        mintypeD: 1,
+        mintypeE: 5,
+        mintypeF: 2,
         reserveA: 0,
         reserveB: 0,
         reserveC: 0,
@@ -44,8 +46,6 @@ class ShowAvailableRoom extends Component {
     }
 
     onSubmit = () => {
-        console.log(this.state.reserveA)
-        console.log(dateList);
         for (let i = 0; i < dateList.length - 1; i++) {
             axios.get(`/${dateList[i]}`).then(resp => {
                 this.setState({
@@ -84,10 +84,9 @@ class ShowAvailableRoom extends Component {
             this.state.reserveF === 0) {
             message.error('กรุณาเลือกประเภทและจำนวนห้องพัก');
         } else {
-            setTimeout(function() {
-                window.location.href = "/CustomerInfo";
-              }, 1000);
-            
+            setTimeout(function () {
+                window.location.href = '/CustomerInfo'
+            }, 2000);
         }
 
     }
@@ -146,15 +145,20 @@ class ShowAvailableRoom extends Component {
     }
 
     increaseRoomA = () => {
-        var count = this.state.reserveA + 1;
-        var money = this.state.cost;
-        if (count > this.state.mintypeA) {
-            count = this.state.mintypeA;
+        if (this.state.mintypeA === 0) {
+            message.error('ขออภัยไม่มีห้องว่างเพียงพอ')
+        } else {
+            var count = this.state.reserveA + 1;
+            var money = this.state.cost;
+            if (count > this.state.mintypeA) {
+                count = this.state.mintypeA;
+            }
+            else {
+                money += this.state.priceRoomA;
+            }
+            this.setState({ reserveA: count, cost: money });
         }
-        else {
-            money += this.state.priceRoomA;
-        }
-        this.setState({ reserveA: count, cost: money });
+
     };
 
     declineRoomA = () => {
@@ -170,15 +174,20 @@ class ShowAvailableRoom extends Component {
     };
 
     increaseRoomB = () => {
-        var count = this.state.reserveB + 1;
-        var money = this.state.cost;
-        if (count > this.state.mintypeB) {
-            count = this.state.mintypeB;
+        if (this.state.mintypeB === 0) {
+            message.error('ขออภัยไม่มีห้องว่างเพียงพอ')
+        } else {
+            var count = this.state.reserveB + 1;
+            var money = this.state.cost;
+            if (count > this.state.mintypeB) {
+                count = this.state.mintypeB;
+            }
+            else {
+                money += this.state.priceRoomB;
+            }
+            this.setState({ reserveB: count, cost: money });
         }
-        else {
-            money += this.state.priceRoomB;
-        }
-        this.setState({ reserveB: count, cost: money });
+
     };
 
     declineRoomB = () => {
@@ -194,15 +203,20 @@ class ShowAvailableRoom extends Component {
     };
 
     increaseRoomC = () => {
-        var count = this.state.reserveC + 1;
-        var money = this.state.cost;
-        if (count > this.state.mintypeC) {
-            count = this.state.mintypeC;
+        if (this.state.mintypeC === 0) {
+            message.error('ขออภัยไม่มีห้องว่างเพียงพอ')
+        } else {
+            var count = this.state.reserveC + 1;
+            var money = this.state.cost;
+            if (count > this.state.mintypeC) {
+                count = this.state.mintypeC;
+            }
+            else {
+                money += this.state.priceRoomC;
+            }
+            this.setState({ reserveC: count, cost: money });
         }
-        else {
-            money += this.state.priceRoomC;
-        }
-        this.setState({ reserveC: count, cost: money });
+
     };
 
     declineRoomC = () => {
@@ -218,15 +232,20 @@ class ShowAvailableRoom extends Component {
     };
 
     increaseRoomD = () => {
-        var count = this.state.reserveD + 1;
-        var money = this.state.cost;
-        if (count > this.state.mintypeD) {
-            count = this.state.mintypeD;
+        if (this.state.mintypeD === 0) {
+            message.error('ขออภัยไม่มีห้องว่างเพียงพอ')
+        } else {
+            var count = this.state.reserveD + 1;
+            var money = this.state.cost;
+            if (count > this.state.mintypeD) {
+                count = this.state.mintypeD;
+            }
+            else {
+                money += this.state.priceRoomD;
+            }
+            this.setState({ reserveD: count, cost: money });
         }
-        else {
-            money += this.state.priceRoomD;
-        }
-        this.setState({ reserveD: count, cost: money });
+
     };
 
     declineRoomD = () => {
@@ -242,15 +261,20 @@ class ShowAvailableRoom extends Component {
     };
 
     increaseRoomE = () => {
-        var count = this.state.reserveE + 1;
-        var money = this.state.cost;
-        if (count > this.state.mintypeE) {
-            count = this.state.mintypeE;
+        if (this.state.mintypeE === 0) {
+            message.error('ขออภัยไม่มีห้องว่างเพียงพอ')
+        } else {
+            var count = this.state.reserveE + 1;
+            var money = this.state.cost;
+            if (count > this.state.mintypeE) {
+                count = this.state.mintypeE;
+            }
+            else {
+                money += this.state.priceRoomE;
+            }
+            this.setState({ reserveE: count, cost: money });
         }
-        else {
-            money += this.state.priceRoomE;
-        }
-        this.setState({ reserveE: count, cost: money });
+
     };
 
     declineRoomE = () => {
@@ -266,15 +290,20 @@ class ShowAvailableRoom extends Component {
     };
 
     increaseRoomF = () => {
-        var count = this.state.reserveF + 1;
-        var money = this.state.cost;
-        if (count > this.state.mintypeF) {
-            count = this.state.mintypeF;
+        if (this.state.mintypeF === 0) {
+            message.error('ขออภัยไม่มีห้องว่างเพียงพอ')
+        } else {
+            var count = this.state.reserveF + 1;
+            var money = this.state.cost;
+            if (count > this.state.mintypeF) {
+                count = this.state.mintypeF;
+            }
+            else {
+                money += this.state.priceRoomF;
+            }
+            this.setState({ reserveF: count, cost: money });
         }
-        else {
-            money += this.state.priceRoomF;
-        }
-        this.setState({ reserveF: count, cost: money });
+
     };
 
     declineRoomF = () => {
@@ -429,7 +458,7 @@ class ShowAvailableRoom extends Component {
                                         <div style={{ marginTop: '5%', fontFamily: "Kanit, sans-serif", fontSize: '18px' }}>
                                             เงินมัดจำ {this.state.cost / 2} บาท
                                     </div>
-                                        <Button style={{ marginLeft: '10%', marginTop: '5%', fontFamily: "Kanit, sans-serif", fontSize: '20px' }} type="primary" onClick={(e) => this.onSubmit(e)} >สำรองห้องพัก</Button>
+                                        <Button style={{ marginLeft: '10%', marginTop: '5%', fontFamily: "Kanit, sans-serif", fontSize: '20px' }} type="primary" onClick={this.onSubmit} >สำรองห้องพัก</Button>
                                     </div>
                                 </Card>
                             </Card>
@@ -439,9 +468,9 @@ class ShowAvailableRoom extends Component {
                                 <div style={{ marginLeft: '4%' }}>
                                     <div style={{ fontFamily: "Kanit, sans-serif" }}>
                                         <div style={{ color: '#6C6560', fontSize: '18px' }}>วันที่เช็คอิน</div>
-                                        <div style={{ marginLeft: '10%', fontSize: '15px' }} >{dateList[0]} ตั้งแต่ 12.00 น.</div>
+                                        <div style={{ marginLeft: '8%', fontSize: '15px' }} >{dateList[0]} ตั้งแต่ 12.00 น.</div>
                                         <div style={{ color: '#6C6560', fontSize: '18px' }}>วันที่เช็คเอาท์</div>
-                                        <div style={{ marginLeft: '10%', fontSize: '15px' }}>{dateList[dateList.length - 1]} จนถึง 11.00 น.</div>
+                                        <div style={{ marginLeft: '8%', fontSize: '15px' }}>{dateList[dateList.length - 1]} จนถึง 11.00 น.</div>
                                         <div style={{ color: '#6C6560', fontSize: '18px' }}>ระยะเวลาเข้าพัก {dateList.length - 1} คืน</div>
                                     </div>
                                 </div>

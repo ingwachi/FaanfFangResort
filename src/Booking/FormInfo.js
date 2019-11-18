@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import 'antd/dist/antd.css';
-import { Form, Input, Button, Card, Col, Row } from 'antd';
+import { Form, Input, Button, Card, Col, Row, message } from 'antd';
 import '../css/FormInfo.css';
 import axios from 'axios';
 const { TextArea } = Input;
@@ -109,10 +109,14 @@ class FormInfo extends Component {
                 const { details, cost, dateCheckIn, dateCheckOut, reserveA, reserveB, reserveC, reserveD, reserveE, reserveF } = this.state
                 axios.post('/addCustomerInfo', ({ name, phoneNum, email, details, cost, dateCheckIn, dateCheckOut, reserveA, reserveB, reserveC, reserveD, reserveE, reserveF, status })).then(res => { console.log(res) })
                 axios.post('/AddStatus', ({ name, phoneNum, status }))
+                message
+                    .loading('กำลังบันทึกข้อมูล', 2)
+                    .then(() => message.success('บันทึกข้อมูลเสร็จสิ้น', 2))
+                setTimeout(function () {
+                    window.location.href = '/ComfirmInfo'
+                }, 3000);
             }
         });
-        window.location.href = '/ComfirmInfo'
-
     };
 
     onchangeTextInput = (value) => {
@@ -138,14 +142,14 @@ class FormInfo extends Component {
                                 <Col span={13}>
                                     <Card style={{ width: 550, height: 300 }}>
                                         <div style={{ fontFamily: "Kanit, sans-serif" }} >
-                                            <Form.Item label="ชื่อ-สกุล :" hasFeedback>
+                                            <Form.Item label="ชื่อผู้จอง :" hasFeedback>
                                                 {getFieldDecorator('name', {
                                                     rules: [{ required: true, message: 'กรุณากรอกชื่อ-นามสกุลของท่าน' }],
                                                 })(<Input style={{ width: '8cm' }} />)}
                                             </Form.Item>
                                             <Form.Item label="หมายเลขติดต่อ :" hasFeedback>
                                                 {getFieldDecorator('phone', {
-                                                    rules: [{ max: 10, message: 'หมายเลขโทรศัพท์ไม่ถูกต้อง' }, { required: true, message: 'กรุณากรอกหมายเลขโทรศัพท์ของท่าน' }],
+                                                    rules: [{ max: 10, min: 10, message: 'หมายเลขโทรศัพท์ไม่ถูกต้อง' }, { required: true, message: 'กรุณากรอกหมายเลขโทรศัพท์ของท่าน' }],
                                                 })(<Input style={{ width: '8cm' }} type='number' onKeyDown={(evt) => (evt.key === 'e' || evt.key === '.' || evt.key === '-') && evt.preventDefault()} />)}
                                             </Form.Item>
                                             <Form.Item label="E-mail" hasFeedback >

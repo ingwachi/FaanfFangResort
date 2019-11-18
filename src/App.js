@@ -5,6 +5,7 @@ import HomePage from './HomePageInfo/HomePage';
 import BookingPage from './Booking/BookingPage';
 import InfoPage from './Booking/InfoPage';
 import ConfirmInfo from './Confirm/ConfirmInfo';
+import FinishPayMent from './Confirm/FinishPayment'
 
 class App extends React.Component {
   render() {
@@ -15,6 +16,7 @@ class App extends React.Component {
         <Route path='/ShowAvailableRoom' component={BookingPage}/>
         <Route path='/CustomerInfo' component={InfoPage}/>
         <Route path='/ComfirmInfo' component={ConfirmInfo}/>
+        <Route path='FinishPayment' component={FinishPayMent}/>
       </Switch>
     </Router>
   );

@@ -5,6 +5,7 @@ import Confirm from './Confirm'
 import kbank from '../img/logoBank/kbank.png';
 import krungthai from '../img/logoBank/krungthai.png';
 import krungsri from '../img/logoBank/krungsri.png';
+import logo from '../img/resort/logo.png'
 
 
 class ConfirmInfo extends React.Component {
@@ -46,12 +47,12 @@ class ConfirmInfo extends React.Component {
         >
           <div style={{fontFamily: "Kanit, sans-serif" }}>
           <div style={{textAlign: 'center', fontSize: '20px', marginBottom: '6%' }}>อัพโหลดข้อมูลและสลิปการโอนค่ามัดจำ</div>
-          <Confirm/>
+          <Confirm style={{marginLeft: '5%'}}/>
           </div>
         </Modal>
         <Card style={{ width: 1000, height: 680 }}>
           <Result
-            icon={<Icon type="smile" theme="twoTone" />}
+            icon={<img style={{width: '20%'}} src={logo}/>}
             title="ขั้นตอนการชำระเงิน"
             style={{ fontFamily: "Kanit, sans-serif" }}
             extra={[
@@ -70,7 +71,7 @@ class ConfirmInfo extends React.Component {
           <div>
             <img style={{ width: '5%', marginLeft: '22%', marginRight: '3%', marginBottom: '2%' }} src={krungsri} /><span style={{ fontFamily: "Kanit, sans-serif" }}>ธนาคารกรุงศรีอยุธยา ชื่อบัญชี : วิไรพร ภูษณะภัทระ : 442-1-50878-1</span>
           </div>
-          <div style={{ marginTop: '5%' }}>
+          <div style={{ marginTop: '1%' }}>
             <Button onClick={this.showModal} type="primary" style={{ marginLeft: '30%', marginRight: '3%', fontFamily: "Kanit, sans-serif" }} >อัพโหลดสลิปโอนเงินค่ามัดจำ</Button>
             <Button onClick={this.onClick} style={{ marginRight: '3%', fontFamily: "Kanit, sans-serif" }} >กลับไปยังหน้าแรก</Button>
           </div>
