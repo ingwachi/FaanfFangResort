@@ -162,12 +162,12 @@ class Confirm extends React.Component {
                             rules: [{ required: true, message: 'กรุณากรอกจำนวนเงินที่โอน' }],
                         })(<Input type='number' onKeyDown={(evt) => (evt.key === 'e' || evt.key === '.' || evt.key === '-') && evt.preventDefault()} />)}
                     </Form.Item>
-                    <Form.Item label="เวลาที่โอน">
+                    <Form.Item label="วันที่โอน">
                         {getFieldDecorator('date-picker', {
                             rules: [{ required: true, message: 'กรุณาเลือกวันที่โอนเงิน' }]
                         })(<DatePicker />)}
                     </Form.Item>
-                    <Form.Item label="เวลที่โอนมัดจำ">
+                    <Form.Item label="เวลาที่โอนมัดจำ">
                         {getFieldDecorator('time-picker', {
                             rules: [{ required: true, message: 'กรุณาเลือกเวลาที่โอน' }]
                         })(<TimePicker format={"HH:mm"} />)}
