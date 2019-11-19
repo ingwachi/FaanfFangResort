@@ -24,7 +24,7 @@ import room5 from '../img/room5/room.jpg';
 import room6 from '../img/room6/room.jpg';
 import logo from '../img/resort/logo.png';
 import Contact from './Contact';
-import Confirm from './Confirm';
+import Confirm from './StatusVerification';
 const { SubMenu } = Menu;
 const { RangePicker } = DatePicker;
 const dateFormat = 'DD/MM/YYYY';
@@ -174,7 +174,7 @@ class HomePage extends React.Component {
         }
         else if (dateList.length == 0) {
             message.error('กรุณาเลือกช่วงวันที่ต้องการเข้าพัก');
-        } 
+        }
         else {
             this.props.history.push('/ShowAvailableRoom')
         }
@@ -207,8 +207,12 @@ class HomePage extends React.Component {
 
                     <a onClick={this.showModal} class="w3-bar-item w3-button w3-hover-white" id="navLabel">ตรวจสอบสถานะการจอง</a>
                     <Modal
+                        style={{fontFamily: "Kanit, sans-serif"}}
+                        width={800}
                         title="ตรวจสอบสถานะการจอง"
                         visible={this.state.visible}
+                        footer={null}
+                        maskClosable={false}
                         onOk={this.handleOk}
                         onCancel={this.handleCancel}
                     >

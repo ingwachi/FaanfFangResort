@@ -145,9 +145,12 @@ class Confirm extends React.Component {
                     <Form.Item label="ชื่อผู้จอง :" hasFeedback>
                         {getFieldDecorator('name', {
                             rules: [{ required: true, message: 'กรุณากรอกชื่อ-นามสกุลของท่าน' }],
-                        })(<Input onKeyDown={(evt) => (evt.key === '0' || evt.key === '1' || evt.key === '2'
-                            || evt.key === '3' || evt.key === '4' || evt.key === '5' || evt.key === '6' || evt.key === '7'
-                            || evt.key === '8' || evt.key === '9') && evt.preventDefault()} />)}
+                        })(<Input  onKeyDown={(evt) => (evt.key === '0' || evt.key === '1' || evt.key === '2'
+                        || evt.key === '3' || evt.key === '4' || evt.key === '5' || evt.key === '6' || evt.key === '7'
+                        || evt.key === '8' || evt.key === '9' || evt.key === '.' || evt.key === '/' || evt.key === '*' || evt.key === '-'
+                        || evt.key === '+' || evt.key === '(' || evt.key === ')'|| evt.key === '%' || evt.key === '$' || evt.key === '!'
+                        || evt.key === '@' || evt.key === '#' || evt.key === '[' || evt.key === ']') || evt.key === '{' 
+                        || evt.key === '}' || evt.key === '?' || evt.key === '`' || evt.key === '฿'&& evt.preventDefault()} />)}
                     </Form.Item>
                     <Form.Item label="หมายเลขติดต่อ :" hasFeedback>
                         {getFieldDecorator('phone', {

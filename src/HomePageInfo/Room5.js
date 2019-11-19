@@ -32,7 +32,7 @@ class Room5 extends React.Component {
                         <div class="col-xl-4 col-lg-5">
                             <div class="featured-text text-center text-lg-left">
                                 <h4 class="headLabel">เรือนไทยหลังเล็ก</h4>
-                                <p class="description">Grayscale is open source and MIT licensed. This means you can use it for any project - even commercial projects! Download it, customize it, and publish your website!</p>
+                                <p class="description">หากต้องการได้รับบรรยากาศที่ร่มรื่นจากบ้านไม้ มีความร่มเย็นจากต้นไม้และตัวบ้านที่ระบายอากาศได้ดี มีความเป็นส่วนตัวมากขึ้นเพียงคืนละ 500 บาทต่อคืน</p>
                             </div>
                         </div>
                     </div>

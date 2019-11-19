@@ -32,7 +32,7 @@ class Room6 extends React.Component {
                         <div class="col-xl-4 col-lg-5">
                             <div class="featured-text text-center text-lg-left">
                                 <h4 class="headLabel">เรือนไทยหลังใหญ่</h4>
-                                <p class="description">Grayscale is open source and MIT licensed. This means you can use it for any project - even commercial projects! Download it, customize it, and publish your website!</p>
+                                <p class="description">มีความเป็นส่วนตัวอย่างมากเนื่องจากมีพื้นที่แต่ละหลังให้ลูกค้าที่เข้ามาพัก ตัวบ้านมีความเย็นเนื่องจากใช้ไม้ที่ระบายอากาศได้ดี และมีต้นไม่ล้อมรอบเยอะทำให้ร่มเย็นมากขึ้น ครอบครัวไหนต้องการบริเวณสามารถเข้าพักได้ เพียงคืนละ 800 บาท</p>
                             </div>
                         </div>
                     </div>

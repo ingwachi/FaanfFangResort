@@ -45,14 +45,14 @@ class ConfirmInfo extends React.Component {
           onOk={this.handleOk}
           onCancel={this.handleCancel}
         >
-          <div style={{fontFamily: "Kanit, sans-serif" }}>
-          <div style={{textAlign: 'center', fontSize: '20px', marginBottom: '6%' }}>อัพโหลดข้อมูลและสลิปการโอนค่ามัดจำ</div>
-          <Confirm style={{marginLeft: '5%'}}/>
+          <div style={{ fontFamily: "Kanit, sans-serif" }}>
+            <div style={{ textAlign: 'center', fontSize: '20px', marginBottom: '6%' }}>อัพโหลดข้อมูลและสลิปการโอนค่ามัดจำ</div>
+            <Confirm style={{ marginLeft: '5%' }} />
           </div>
         </Modal>
         <Card style={{ width: 1000, height: 680 }}>
           <Result
-            icon={<img style={{width: '20%'}} src={logo}/>}
+            icon={<img style={{ width: '20%' }} src={logo} />}
             title="ขั้นตอนการชำระเงิน"
             style={{ fontFamily: "Kanit, sans-serif" }}
             extra={[

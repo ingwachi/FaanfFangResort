@@ -36,7 +36,7 @@ class Room4 extends React.Component {
                         <div class="col-xl-4 col-lg-5">
                             <div class="featured-text text-center text-lg-left">
                                 <h4 class="headLabel">บ้านริมน้ำ</h4>
-                                <p class="description">Grayscale is open source and MIT licensed. This means you can use it for any project - even commercial projects! Download it, customize it, and publish your website!</p>
+                                <p class="description">บรรยากาศร่มรื่น ริมน้ำข้างๆตัวบ้านเพิ่มความเป็นส่วนตัวมากขึ้นให้กับลูกค้าที่เข้าพัก มีวิวแหล่งน้ำที่ดีเหมาะแก่การถ่ายรูป ราคาเพียง ราคาเพียง 700 บาทต่อคืน</p>
                             </div>
                         </div>
                     </div>

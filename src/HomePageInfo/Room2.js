@@ -36,7 +36,7 @@ class Room2 extends React.Component {
                         <div class="col-xl-4 col-lg-5">
                             <div class="featured-text text-center text-lg-left">
                                 <h4 class="headLabel">บ้านแฝดหลังเล็ก</h4>
-                                <p class="description">Grayscale is open source and MIT licensed. This means you can use it for any project - even commercial projects! Download it, customize it, and publish your website!</p>
+                                <p class="description">เหมาะสำหรับเข้าพัก 1-2 คน โดยหนึ่งบล็อคเป็นห้องสองหลังติดกัน สะดวกต่อคนที่ต้องการแยกห้องนอนกับเพื่อนหรือครอบครัว ราคาเพียง 400 บาทต่อคืน</p>
                             </div>
                         </div>
                     </div>
