@@ -16,7 +16,7 @@ class App extends React.Component {
         <Route path='/ShowAvailableRoom' component={BookingPage}/>
         <Route path='/CustomerInfo' component={InfoPage}/>
         <Route path='/ComfirmInfo' component={ConfirmInfo}/>
-        <Route path='FinishPayment' component={FinishPayMent}/>
+        <Route path='/FinishPayment' component={FinishPayMent}/>
       </Switch>
     </Router>
   );

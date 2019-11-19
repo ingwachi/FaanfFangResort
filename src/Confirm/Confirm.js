@@ -39,7 +39,6 @@ class Confirm extends React.Component {
             progress: 0,
             status: "รอการตรวจสอบ",
             statusUpload: '',
-            visible: false
         }
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
@@ -79,19 +78,23 @@ class Confirm extends React.Component {
                                 const price = values.Price;
                                 const { url, status } = this.state
 
-                                axios.post('/addReceiptInfo', ({ name, phoneNum, datePayment, timePayment, price, url, status })).then(resp => {
-                                    console.log(resp);
+                                axios.get(`/findCustomerByPhone/${phoneNum}`).then(resp => {
+                                    const id = resp.data.id
+                                    axios.post('/addReceiptInfo', ({ id, name, phoneNum, datePayment, timePayment, price, url, status })).then(resp => {
+                                        console.log(resp);
+                                    })
+                                    axios.put(`/updateStatusRecById/${resp.data.id}`, ({ status }))
+                                    axios.put(`/updateStatusCusById/${resp.data.id}`, ({ status }))
+                                    message
+                                        .loading('ระบบกำลังบันทึกข้อมูล', 1)
+                                        .then(() => message.success('กำลังบันทึกข้อมูล', 1))
+
+                                    setTimeout(function () {
+                                        window.location.href = "/FinishPayment"
+                                    }, 2000);
                                 })
 
-                                axios.put(`/updateStatusRec/${phoneNum}`, ({ status }))
-                                axios.put(`/updateStatusCus/${phoneNum}`, ({ status }))
-                                message
-                                    .loading('Loading..', 1)
-                                    .then(() => message.success('กำลังบันทึกข้อมูล', 1))
 
-                                setTimeout(function () {
-                                    window.location.href = "/"
-                                }, 2000);
                             })
                         });
                 }
@@ -168,7 +171,7 @@ class Confirm extends React.Component {
                     </Form.Item>
 
                     <div style={{ textAlign: 'center', color: 'black' }}>อัพโหลดหลักฐานการชำระเงิน</div>
-                    <div style={{marginLeft:'36%'}}>
+                    <div style={{ marginLeft: '36%' }}>
                         <Upload
                             name="avatar"
                             // type="file"

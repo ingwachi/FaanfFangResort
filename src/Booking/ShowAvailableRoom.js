@@ -84,6 +84,8 @@ class ShowAvailableRoom extends Component {
             this.state.reserveF === 0) {
             message.error('กรุณาเลือกประเภทและจำนวนห้องพัก');
         } else {
+            message.loading('ระบบกำลังบันทึกข้อมูล', 1)
+            .then(() => message.success('บันทึกข้อมูลเสร็จสิ้น', 1))
             setTimeout(function () {
                 window.location.href = '/CustomerInfo'
             }, 2000);

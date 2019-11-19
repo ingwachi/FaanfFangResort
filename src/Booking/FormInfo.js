@@ -12,6 +12,7 @@ class FormInfo extends Component {
     constructor(props) {
         super(props)
         this.state = {
+            id: '',
             name: '',
             phoneNum: '',
             email: '',
@@ -38,6 +39,8 @@ class FormInfo extends Component {
 
 
     componentDidMount() {
+        var rand = Math.floor(1000 + Math.random() * 9000)
+        this.setState({id: rand})
         axios.get('/findTempData').then(resp => {
             this.setState({
                 cost: resp.data[0].cost,
@@ -106,11 +109,11 @@ class FormInfo extends Component {
                 console.log(name)
                 console.log(phoneNum)
                 console.log(email)
-                const { details, cost, dateCheckIn, dateCheckOut, reserveA, reserveB, reserveC, reserveD, reserveE, reserveF } = this.state
-                axios.post('/addCustomerInfo', ({ name, phoneNum, email, details, cost, dateCheckIn, dateCheckOut, reserveA, reserveB, reserveC, reserveD, reserveE, reserveF, status })).then(res => { console.log(res) })
-                axios.post('/AddStatus', ({ name, phoneNum, status }))
+                const { id, details, cost, dateCheckIn, dateCheckOut, reserveA, reserveB, reserveC, reserveD, reserveE, reserveF } = this.state
+                axios.post('/addCustomerInfo', ({ id, name, phoneNum, email, details, cost, dateCheckIn, dateCheckOut, reserveA, reserveB, reserveC, reserveD, reserveE, reserveF, status })).then(res => { console.log(res) })
+                axios.post('/AddStatus', ({ id, name, phoneNum, status }))
                 message
-                    .loading('กำลังบันทึกข้อมูล', 2)
+                    .loading('ระบบกำลังบันทึกข้อมูล', 2)
                     .then(() => message.success('บันทึกข้อมูลเสร็จสิ้น', 2))
                 setTimeout(function () {
                     window.location.href = '/ComfirmInfo'
