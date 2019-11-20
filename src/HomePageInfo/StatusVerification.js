@@ -27,6 +27,11 @@ class statusVerification extends React.Component {
           console.log("data:", resp)
           if(resp.data == "") {
             message.error('ไม่มีข้อมูลของท่านโปรดตรวจสอบหมายเลขโทรศัพท์หรือติดต่อทางรีสอร์ท')
+            this.setState({
+              current: 0,
+              status: '',
+              verifyStatus: 'รอการตรวจสอบ'
+            })
           }
           if (resp.data.status == "จองที่พัก") {
             this.setState({

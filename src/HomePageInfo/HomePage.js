@@ -43,13 +43,19 @@ function disabledDate(current) {
     if (!current) {
         // allow empty select
         return false;
+      } const date = moment();
+      date.hour(0);
+      date.minute(0);
+      date.second(0)
+    if (current.valueOf() < date.valueOf()){
+        return true ;
     }
-    const date = moment();
-    date.hour(0);
-    date.minute(0);
-    date.second(0);
-    return current.valueOf() < date.valueOf();  // can not select days before today
-}
+    if (current >moment().add(3, "month")){
+        return true;
+    }
+      
+  }
+  
 function disabledRangeTime(_, type) {
     if (type === 'start') {
         return {
