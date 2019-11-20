@@ -38,6 +38,7 @@ function range(start, end) {
     }
     return result;
 }
+
 function disabledDate(current) {
     // Can not select days before today and today
     if (!current) {
@@ -55,7 +56,7 @@ function disabledDate(current) {
     }
       
   }
-  
+
 function disabledRangeTime(_, type) {
     if (type === 'start') {
         return {
@@ -169,12 +170,6 @@ class HomePage extends React.Component {
 
     onSubmit = (e) => {
         e.preventDefault();
-        // dateList.forEach(element => {
-        //     console.log(element);
-        //     const date = element
-        //     const { typeA, typeB, typeC, typeD, typeE, typeF } = this.state;
-        //     axios.post('/addAvailableRoom', ({ date, typeA, typeB, typeC, typeD, typeE, typeF }))
-        // });
         if (dateList.length == 1) {
             message.error('กรุณาเลือกวันที่ให้ถูกต้อง')
         }
