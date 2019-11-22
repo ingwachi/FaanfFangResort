@@ -102,10 +102,11 @@ class Confirm extends React.Component {
                                 const timePayment = values['time-picker'].format('HH:mm');
                                 const price = this.state.price;
                                 const { url, status } = this.state
+                                const dateCheckin = this.state.dateCheckIn
 
                                 axios.get(`/findBookingInfoByPhone/${phoneNum}`).then(resp => {
                                     const id = resp.data.id
-                                    axios.post('/addReceiptInfo', ({ id, name, phoneNum, datePayment, timePayment, price, url, status })).then(resp => {
+                                    axios.post('/addReceiptInfo', ({ id, name, phoneNum, datePayment, dateCheckin, timePayment, price, url, status })).then(resp => {
                                         console.log(resp);
                                     })
                                     axios.put(`/updateStatusRecById/${resp.data.id}`, ({ status }))
@@ -118,8 +119,6 @@ class Confirm extends React.Component {
                                         window.location.href = "/FinishPayment"
                                     }, 2000);
                                 })
-
-
                             })
                         });
                 }
