@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import 'antd/dist/antd.css';
-import { Form, Input, Button, Card, Col, Row, message } from 'antd';
+import { Form, Input, Button, Card, Col, Row, message, Anchor } from 'antd';
 import '../css/FormInfo.css';
 import axios from 'axios';
-const { TextArea } = Input;
+const { Link } = Anchor;
 
 
 
@@ -33,14 +33,20 @@ class FormInfo extends Component {
             roomDLabel: '',
             roomELabel: '',
             roomFLabel: '',
-            dateCount: 0
+            dateCount: 0,
+            showForm: 'none',
+            showFirstForm: '',
+            showOldCusForm: 'none',
+            showButtonForm: '',
+            phoneCheck: '',
+            phoneError: ''
         }
     }
 
 
     componentDidMount() {
         var rand = Math.floor(1000 + Math.random() * 9000)
-        this.setState({id: rand})
+        this.setState({ id: rand })
         axios.get('/findTempData').then(resp => {
             this.setState({
                 cost: resp.data[0].cost,
@@ -97,6 +103,27 @@ class FormInfo extends Component {
         console.log(this.state.reserveF)
     }
 
+    handleShowOldCustomer = e => {
+        e.preventDefault()
+        var count = this.state.phoneCheck
+        console.log(count.length)
+
+    }
+
+    handleSubmit2 = e => {
+        e.preventDefault();
+        const status = 'จองที่พัก';
+        const { id, name,phoneNum, email, details, cost, dateCheckIn, dateCheckOut, reserveA, reserveB, reserveC, reserveD, reserveE, reserveF } = this.state
+        axios.post('/addBookingInfo', ({ id, name, phoneNum, email, details, cost, dateCheckIn, dateCheckOut, reserveA, reserveB, reserveC, reserveD, reserveE, reserveF, status })).then(res => { console.log(res) })
+        axios.post('/AddStatus', ({ id, name, phoneNum, status }))
+        message
+            .loading('ระบบกำลังบันทึกข้อมูล', 2)
+            .then(() => message.success('บันทึกข้อมูลเสร็จสิ้น', 2))
+        setTimeout(function () {
+            window.location.href = '/ComfirmInfo'
+        }, 3000);
+    }
+
     handleSubmit = e => {
         e.preventDefault();
         this.props.form.validateFields((err, values) => {
@@ -110,7 +137,7 @@ class FormInfo extends Component {
                 console.log(phoneNum)
                 console.log(email)
                 const { id, details, cost, dateCheckIn, dateCheckOut, reserveA, reserveB, reserveC, reserveD, reserveE, reserveF } = this.state
-                axios.post('/addCustomerInfo', ({ id, name, phoneNum, email, details, cost, dateCheckIn, dateCheckOut, reserveA, reserveB, reserveC, reserveD, reserveE, reserveF, status })).then(res => { console.log(res) })
+                axios.post('/addBookingInfo', ({ id, name, phoneNum, email, details, cost, dateCheckIn, dateCheckOut, reserveA, reserveB, reserveC, reserveD, reserveE, reserveF, status })).then(res => { console.log(res) })
                 axios.post('/AddStatus', ({ id, name, phoneNum, status }))
                 message
                     .loading('ระบบกำลังบันทึกข้อมูล', 2)
@@ -129,6 +156,73 @@ class FormInfo extends Component {
         })
     }
 
+    showForm = (e) => {
+        this.setState({
+            showForm: '',
+            showFirstForm: 'none'
+        })
+    }
+
+    handlePhoneCheckOnChange = event => {
+        this.setState({ phoneCheck: event.target.value }, () => {
+            this.validatePhoneNum();
+        });
+    }
+
+    validatePhoneNum = () => {
+        const { phoneCheck } = this.state;
+        this.setState({
+            phoneError:
+                phoneCheck.length == 10 ? null : 'หมายเลขโทรศัพท์ไม่ถูกต้อง'
+        });
+    }
+
+    handleSubmitPhone = event => {
+        event.preventDefault();
+        console.log(this.state.phoneCheck)
+        if (this.state.phoneCheck.length == 10) {
+            const phoneNum = this.state.phoneCheck
+            axios.get(`/findCustomerByPhone/${phoneNum}`, ({ phoneNum })).then(resp => {
+                this.setState({
+                    name: resp.data.name,
+                    email: resp.data.email,
+                    phoneNum: resp.data.phoneNum
+                })
+                console.log(resp.data.name)
+                console.log(this.state.email)
+                if (resp.data.name == null) {
+                    message.error("ไม่มีข้อมูลของท่าน")
+                    this.setState({
+                        showButtonForm: '',
+                        showOldCusForm: 'none'
+                    })
+                } else {
+                    this.setState({
+                        showButtonForm: 'none',
+                        showOldCusForm: ''
+                    })
+                }
+
+            })
+
+
+        } else if (this.state.phoneCheck.length == 0) {
+            message.error('กรุณากรอกหมายเลขโทรศัพท์')
+        }
+        else {
+            message.error('หมายเลขโทรศัพท์ไม่ถูกต้อง')
+        }
+    };
+
+    toggleShow = e => {
+        this.setState({
+            showFirstForm: '',
+            showForm: 'none'
+        })
+    }
+
+
+
     render() {
         const { getFieldDecorator } = this.props.form;
         const formItemLayout = {
@@ -140,20 +234,23 @@ class FormInfo extends Component {
             <div>
                 <div>
                     <Card style={{ width: 1080, backgroundColor: '#FFE8D8' }}>
-                        <Form {...formItemLayout} onSubmit={this.handleSubmit} >
-                            <Row>
-                                <Col span={13}>
-                                    <Card style={{ width: 550, height: 300 }}>
-                                        <div style={{ fontFamily: "Kanit, sans-serif" }} >
+
+                        <Row>
+                            <Col span={13}>
+                                <Card style={{ width: 550, height: 350, marginTop: '2%' }}>
+                                    <Form {...formItemLayout} onSubmit={this.handleSubmit} >
+
+                                        <div style={{ fontFamily: "Kanit, sans-serif", display: this.state.showForm }} >
+                                        <div style={{color: 'red', fontSize: '20px'}}>รหัสการจองห้องพัก {this.state.id} <div style={{fontSize:'12px'}}>*โปรดจดบันทึกรหัสการจองเพื่อใช้ในการยืนยันสลิปเงินมัดจำ</div></div>
                                             <Form.Item label="ชื่อผู้จอง :" hasFeedback>
                                                 {getFieldDecorator('name', {
                                                     rules: [{ required: true, message: 'กรุณากรอกชื่อ-นามสกุลของท่าน' }],
                                                 })(<Input style={{ width: '8cm' }} onKeyDown={(evt) => (evt.key === '0' || evt.key === '1' || evt.key === '2'
-                                                || evt.key === '3' || evt.key === '4' || evt.key === '5' || evt.key === '6' || evt.key === '7'
-                                                || evt.key === '8' || evt.key === '9' || evt.key === '.' || evt.key === '/' || evt.key === '*' || evt.key === '-'
-                                                || evt.key === '+' || evt.key === '(' || evt.key === ')'|| evt.key === '%' || evt.key === '$' || evt.key === '!'
-                                                || evt.key === '@' || evt.key === '#' || evt.key === '[' || evt.key === ']') || evt.key === '{' 
-                                                || evt.key === '}' || evt.key === '?' || evt.key === '`' || evt.key === '฿'&& evt.preventDefault()} />)}
+                                                    || evt.key === '3' || evt.key === '4' || evt.key === '5' || evt.key === '6' || evt.key === '7'
+                                                    || evt.key === '8' || evt.key === '9' || evt.key === '.' || evt.key === '/' || evt.key === '*' || evt.key === '-'
+                                                    || evt.key === '+' || evt.key === '(' || evt.key === ')' || evt.key === '%' || evt.key === '$' || evt.key === '!'
+                                                    || evt.key === '@' || evt.key === '#' || evt.key === '[' || evt.key === ']') || evt.key === '{'
+                                                    || evt.key === '}' || evt.key === '?' || evt.key === '`' || evt.key === '฿' && evt.preventDefault()} />)}
                                             </Form.Item>
                                             <Form.Item label="หมายเลขติดต่อ :" hasFeedback>
                                                 {getFieldDecorator('phone', {
@@ -174,46 +271,79 @@ class FormInfo extends Component {
                                                     ],
                                                 })(<Input style={{ width: '8cm' }} />)}
                                             </Form.Item>
+                                                <Button  style={{ fontFamily: "Kanit, sans-serif", fontSize: '16px' }} type="link" onClick={(e) => this.toggleShow(e)}>กลับ</Button>
+                                            
+                                            <Button style={{ marginLeft: '28%', fontFamily: "Kanit, sans-serif", fontSize: '16px' }} type="primary" htmlType="submit">
+                                                ยืนยันข้อมูล
+                                            </Button>
+                                            
                                         </div>
-                                        <Button style={{ marginLeft: '30%', fontFamily: "Kanit, sans-serif", fontSize: '20px' }} type="primary" htmlType="submit">
-                                            ยืนยันข้อมูล
-                                    </Button>
-                                    </Card>
-
-                                    <Card style={{ width: 550, height: 138, marginTop: '2%', fontFamily: "Kanit, sans-serif", fontSize: '20px' }}>
-                                        <div style={{ textAlign: 'center' }}>ติดต่อสอบถาม</div>
-                                        <div style={{ textAlign: 'center' }}>Line ID : @fangfangresort</div>
-                                        <div style={{ textAlign: 'center' }}>หมายเลขติดต่อ : 08-6827-8255</div>
-                                    </Card>
-
-                                </Col>
-                                <Col span={1}>
-                                    <Card style={{ width: 450, height: 450 }} >
-                                        <div style={{ fontFamily: "Kanit, sans-serif", fontSize: '15px' }}>
-                                            <div style={{ fontFamily: "Kanit, sans-serif", fontSize: '20px', textAlign: 'center' }}>ข้อมูลการเข้าพัก</div>
-                                            <div>--------------------------------------------------</div>
-                                            <Card style={{ height: 170 }}>
-                                                <div>{this.state.roomALabel}</div>
-                                                <div>{this.state.roomBLabel}</div>
-                                                <div>{this.state.roomCLabel}</div>
-                                                <div>{this.state.roomDLabel}</div>
-                                                <div>{this.state.roomELabel}</div>
-                                                <div>{this.state.roomFLabel}</div>
-                                            </Card>
-                                            <div>--------------------------------------------------</div>
-                                            <span style={{ marginRight: '60%' }}>วันที่เช็คอิน</span><span>{this.state.dateCheckIn}</span>
-                                            <div><span style={{ marginRight: '57%' }}>วันที่เช็คเอาท์</span><span>{this.state.dateCheckOut}</span></div>
-                                            <div><span style={{ marginRight: '57%' }}>ระยะเวลาเข้าพัก</span><span>{this.state.dateCount} คืน</span></div>
-                                            <div>--------------------------------------------------</div>
-                                            <span style={{ marginRight: '60%' }}>ราคาทั้งหมด</span><span>{this.state.cost} บาท</span>
-                                            <div><span style={{ marginRight: '67.5%' }}>ค่ามัดจำ</span><span>{this.state.cost / 2} บาท</span></div>
-                                            <div style={{ color: 'coral', fontSize: '14px', marginTop: '5%' }}>*หมายเหตุ โอนเฉพาะค่ามัดจำก่อนเท่านั้น</div>
+                                    </Form>
+                                    <div style={{ fontFamily: "Kanit, sans-serif", display: this.state.showFirstForm }}>
+                                        <div style={{ marginBottom: '3%', color: 'black' }}>หากท่านเคยพักแล้วกรุณาใส่หมายเลขโทรศัพท์ของท่านเพื่อค้นหาข้อมูล</div>
+                                        {/* <Input style={{ width: '8cm' }} type='number' onBlur={this.validatePhoneNum} onChange={(value) => this.handlePhoneCheckOnChange(value)} /> */}
+                                        <input
+                                            type='number'
+                                            name='phoneNum'
+                                            className={`form-control ${this.state.phoneError ? 'is-invalid' : ''}`}
+                                            id='phoneNum'
+                                            placeholder='Enter Phone Number'
+                                            value={this.state.phoneCheck}
+                                            onChange={this.handlePhoneCheckOnChange}
+                                            onBlur={this.validatePhoneNum}
+                                            style={{ width: '10cm', marginLeft: '10%' }}
+                                            onKeyDown={(evt) => (evt.key === 'e' || evt.key === '.' || evt.key === '-') && evt.preventDefault()}
+                                        />
+                                        <div className='invalid-feedback' >{this.state.emailError}</div>
+                                        <Button style={{ marginTop: '3%', marginLeft: '40%', fontFamily: "Kanit, sans-serif" }} onClick={(e) => this.handleSubmitPhone(e)} >ค้นหา</Button>
+                                        <div style={{ fontSize: '18px', display: this.state.showOldCusForm }} >
+                                            <div style={{color: 'red'}}>รหัสการจองห้องพัก {this.state.id} <div style={{fontSize:'12px'}}>*โปรดจดบันทึกรหัสการจองเพื่อใช้ในการยืนยันสลิปเงินมัดจำ</div></div>
+                                            <div>ชื่อผู้จอง : {this.state.name}</div>
+                                            <div>หมายเลขโทรศัพท์ : {this.state.phoneNum}</div>
+                                            <div>อีเมล : {this.state.email}</div>
+                                            <Button style={{ fontFamily: "Kanit, sans-serif", marginLeft: '37%', marginTop: '2%' }} type='primary' onClick={(e) => this.handleSubmit2(e)}>ยืนยันข้อมูล</Button>
                                         </div>
-                                    </Card>
-                                </Col>
-                            </Row>
+                                        <div style={{ display: this.state.showButtonForm }}>
+                                            <div style={{ marginTop: '5%', marginLeft: '5%', fontFamily: "Kanit, sans-serif", fontSize: '16px', color: 'coral' }} >หากท่านยังไม่เคยเข้าพักคลิกปุ่ม"ยังไม่เคยเข้าพัก"เพื่อกรอกข้อมูล</div>
+                                            <Button type="primary" style={{ marginTop: '5%', marginLeft: '35%', fontFamily: "Kanit, sans-serif" }} onClick={(e) => this.showForm(e)}>ยังไม่เคยเข้าพัก</Button>
+                                        </div>
+                                    </div>
+                                </Card>
 
-                        </Form>
+                                <Card style={{ width: 550, height: 138, marginTop: '2%', fontFamily: "Kanit, sans-serif", fontSize: '20px' }}>
+                                    <div style={{ textAlign: 'center' }}>ติดต่อสอบถาม</div>
+                                    <div style={{ textAlign: 'center' }}>Line ID : @fangfangresort</div>
+                                    <div style={{ textAlign: 'center' }}>หมายเลขติดต่อ : 08-6827-8255</div>
+                                </Card>
+
+                            </Col>
+                            <Col span={1}>
+                                <Card style={{ width: 450, height: 450 }} >
+                                    <div style={{ fontFamily: "Kanit, sans-serif", fontSize: '15px' }}>
+                                        <div style={{ fontFamily: "Kanit, sans-serif", fontSize: '20px', textAlign: 'center' }}>ข้อมูลการเข้าพัก</div>
+                                        <div>--------------------------------------------------</div>
+                                        <Card style={{ height: 170 }}>
+                                            <div>{this.state.roomALabel}</div>
+                                            <div>{this.state.roomBLabel}</div>
+                                            <div>{this.state.roomCLabel}</div>
+                                            <div>{this.state.roomDLabel}</div>
+                                            <div>{this.state.roomELabel}</div>
+                                            <div>{this.state.roomFLabel}</div>
+                                        </Card>
+                                        <div>--------------------------------------------------</div>
+                                        <span style={{ marginRight: '60%' }}>วันที่เช็คอิน</span><span>{this.state.dateCheckIn}</span>
+                                        <div><span style={{ marginRight: '57%' }}>วันที่เช็คเอาท์</span><span>{this.state.dateCheckOut}</span></div>
+                                        <div><span style={{ marginRight: '57%' }}>ระยะเวลาเข้าพัก</span><span>{this.state.dateCount} คืน</span></div>
+                                        <div>--------------------------------------------------</div>
+                                        <span style={{ marginRight: '60%' }}>ราคาทั้งหมด</span><span>{this.state.cost} บาท</span>
+                                        <div><span style={{ marginRight: '67.5%' }}>ค่ามัดจำ</span><span>{this.state.cost / 2} บาท</span></div>
+                                        <div style={{ color: 'coral', fontSize: '14px', marginTop: '5%' }}>*หมายเหตุ โอนเฉพาะค่ามัดจำก่อนเท่านั้น</div>
+                                    </div>
+                                </Card>
+                            </Col>
+                        </Row>
+
+
                     </Card>
                 </div>
             </div>

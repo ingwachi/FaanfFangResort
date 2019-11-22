@@ -23,7 +23,8 @@ class statusVerification extends React.Component {
     this.props.form.validateFields((err, values) => {
       if (!err) {
         const phoneNum = values.phone
-        axios.get(`/findStatusByPhoneNum/${phoneNum}`).then(resp => {
+        const id = values.id
+        axios.get(`/findStatusByIdAndPhoneNum/${id}/${phoneNum}`).then(resp => {
           console.log("data:", resp)
           if(resp.data == "") {
             message.error('ไม่มีข้อมูลของท่านโปรดตรวจสอบหมายเลขโทรศัพท์หรือติดต่อทางรีสอร์ท')
@@ -75,13 +76,12 @@ class statusVerification extends React.Component {
               rules: [{ max: 10, min: 10, message: 'หมายเลขโทรศัพท์ไม่ถูกต้อง' }, { required: true, message: 'กรุณากรอกหมายเลขโทรศัพท์ของท่าน' }],
             })(<Input type='number' onKeyDown={(evt) => (evt.key === 'e' || evt.key === '.' || evt.key === '-') && evt.preventDefault()} style={{ width: '10cm' }} />)}
           </Form.Item>
+          <Form.Item label="รหัสการจอง :" hasFeedback>
+            {getFieldDecorator('id', {
+              rules: [{ max: 4, min: 4, message: 'รหัสการจองไม่ถูกต้อง' }, { required: true, message: 'กรุณากรอกรหัสการจอง' }],
+            })(<Input type='number' onKeyDown={(evt) => (evt.key === 'e' || evt.key === '.' || evt.key === '-') && evt.preventDefault()} style={{ width: '10cm' }} />)}
+          </Form.Item>
           <span><Button type="primary" style={{ fontFamily: "Kanit, sans-serif", marginLeft: '45%', marginBottom: '2%' }} htmlType="submit">ตรวจสอบ</Button></span>
-          {/* <Steps >
-            <Step status={this.state.reserveStatus} title={<div style={{ fontSize: '13px' }}>รอการชำระเงิน</div>} icon={<Icon style={{ fontSize: '20px' }} type="user" />} />
-            <Step status={this.state.waitStatus} title={<div style={{ fontSize: '13px' }}>ตรวจสอบสลิป</div>} icon={<Icon style={{ fontSize: '20px' }} type="solution" />} />
-            <Step status={this.state.verifyStatus} title={<div style={{ fontSize: '13px' }}>{this.state.receiptLabel}</div>} icon={<Icon type="file-image" />} />
-            <Step status={this.state.fisnishStatus} title={<div style={{ fontSize: '13px' }}>เสร็จสิ้น</div>} icon={<Icon type="smile-o" />} />
-          </Steps> */}
           <Steps type="navigation" current={this.state.current} status={this.state.status} style={stepStyle}>
             <Step title="ทำการจอง" description="รอการอัพโหลดสลิป" />
             <Step title="ตรวจสอบสลิป" description="ทำการตรวจสอบความถูกต้องของสลิป" />

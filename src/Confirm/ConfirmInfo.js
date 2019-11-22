@@ -46,7 +46,6 @@ class ConfirmInfo extends React.Component {
           onCancel={this.handleCancel}
         >
           <div style={{ fontFamily: "Kanit, sans-serif" }}>
-            <div style={{ textAlign: 'center', fontSize: '20px', marginBottom: '6%' }}>อัพโหลดข้อมูลและสลิปการโอนค่ามัดจำ</div>
             <Confirm style={{ marginLeft: '5%' }} />
           </div>
         </Modal>
