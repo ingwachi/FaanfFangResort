@@ -182,7 +182,7 @@ class FormInfo extends Component {
         console.log(this.state.phoneCheck)
         if (this.state.phoneCheck.length == 10) {
             const phoneNum = this.state.phoneCheck
-            axios.get(`/findCustomerByPhone/${phoneNum}`, ({ phoneNum })).then(resp => {
+            axios.get(`/findBookingInfoByPhone/${phoneNum}`, ({ phoneNum })).then(resp => {
                 this.setState({
                     name: resp.data.name,
                     email: resp.data.email,
